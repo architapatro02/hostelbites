@@ -1,4 +1,6 @@
 import 'package:hostelbites/homeUser.dart';
+import 'package:hostelbites/homeWarden.dart';
+import 'package:hostelbites/loginWarden.dart';
 import 'package:hostelbites/splash.dart';
 import 'package:hostelbites/loginUser.dart';
 import 'package:hostelbites/registerUser.dart';
@@ -15,7 +17,9 @@ void main() {
       'start': (context)=>const MyStart(),
       'loginUser': (context)=>const MyLogin(),
       'registerUser': (context)=>const MyRegister(),
-      'home1': (context)=>const UserHome(),
+      'homeUser': (context)=>const UserHome(),
+      'loginWarden': (context)=>const MyLoginW(),
+      'homeWarden':(context)=>const WardenHome()
     },
   )); //Material App
 }

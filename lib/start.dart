@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hostelbites/loginUser.dart';
+import 'package:hostelbites/loginWarden.dart';
 
 class MyStart extends StatefulWidget {
   const MyStart({super.key});
@@ -11,36 +12,40 @@ class MyStart extends StatefulWidget {
 class _MyStartState extends State<MyStart> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/images/bg1.jpg'), fit: BoxFit.cover)),
+      //debugShowCheckedModeBanner: false,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: Text("Buttons"),
-          foregroundColor: Colors.orange,
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
         ),
         body: Stack(
           children: [
             Container(
-              color: Colors.orangeAccent,
-              child: Center(child: Text('Login As', style: TextStyle(
-                  fontSize: 34,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black87,
-                  fontFamily: 'FontMain'),
-              )),
-              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.05),
-              // child: Text(
-              //   'Login As',
-              //   style: TextStyle(color: Colors.orange,fontSize: 50),
-              // ),
+              color: Colors.transparent,
+              padding: EdgeInsets.only(left:80,top: 20),
+              child: Text(
+                'Hostel Bites',
+                style: TextStyle(color: Colors.orangeAccent,fontSize: 50,fontFamily: 'FontMain',fontWeight: FontWeight.bold),
+              ),
             ),
             SingleChildScrollView(
               padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height*0.5,left: 150),
+                  top: MediaQuery.of(context).size.height*0.5,left: 135),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Text(
+                    'Login As', style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black87,
+                  ),
+                  ),
                   ElevatedButton(
                     onPressed: (){
                       Navigator.push(context, MaterialPageRoute(
@@ -54,7 +59,11 @@ class _MyStartState extends State<MyStart> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context)=>const MyLoginW())
+                      );
+                    },
                     child: Text('Warden'),
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.orange),
