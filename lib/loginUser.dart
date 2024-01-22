@@ -1,7 +1,7 @@
-import 'package:hostelbites/register.dart';
+import 'package:hostelbites/registerUser.dart';
 import 'package:flutter/material.dart';
 
-import 'home1.dart';
+import 'homeUser.dart';
 
 class MyLogin extends StatefulWidget {
   const MyLogin({Key? key}) : super(key: key);

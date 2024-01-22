@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:hostelbites/login.dart';
 import 'package:flutter/material.dart';
+import 'package:hostelbites/loginUser.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

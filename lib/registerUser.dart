@@ -1,4 +1,4 @@
-import 'package:hostelbites/login.dart';
+import 'package:hostelbites/loginUser.dart';
 import 'package:flutter/material.dart';
 
 class MyRegister extends StatefulWidget {
