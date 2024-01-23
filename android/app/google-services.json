@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "210709149272",
+    "project_id": "hostelbites-d53a6",
+    "storage_bucket": "hostelbites-d53a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210709149272:android:6788c29758ef213d0d3c2d",
+        "android_client_info": {
+          "package_name": "com.example.hostelbites"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_2UR7ottKmZAysDBxNI_skXu6zmt8FlI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

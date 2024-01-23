@@ -1,23 +1,22 @@
-import 'package:hostelbites/registerUser.dart';
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-import 'homeUser.dart';
+import '../user/homeUser.dart';
 
-class MyLogin extends StatefulWidget {
-  const MyLogin({Key? key}) : super(key: key);
+class MyLoginW extends StatefulWidget {
+  const MyLoginW({Key? key}) : super(key: key);
 
   @override
-  _MyLoginState createState() => _MyLoginState();
+  _MyLoginWState createState() => _MyLoginWState();
 }
 
 
-class _MyLoginState extends State<MyLogin> {
+class _MyLoginWState extends State<MyLoginW> {
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/images/login.jpg'), fit: BoxFit.cover)),
+              image: AssetImage('assets/images/bg2.jpg'), fit: BoxFit.cover)),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
@@ -30,7 +29,7 @@ class _MyLoginState extends State<MyLogin> {
               padding: EdgeInsets.only(left:80,top: 150),
               child: Text(
                 'Hostel Bites',
-                style: TextStyle(color: Colors.orangeAccent,fontSize: 50),
+                style: TextStyle(color: Colors.black,fontSize: 50),
               ),
             ),
             SingleChildScrollView(
@@ -43,7 +42,7 @@ class _MyLoginState extends State<MyLogin> {
                       decoration: InputDecoration(
                           fillColor: Colors.deepOrangeAccent,
                           filled: true,
-                          hintText: 'Student Id',
+                          hintText: 'Warden Id',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20)
                           )
@@ -71,13 +70,13 @@ class _MyLoginState extends State<MyLogin> {
                       children: [
                         Text('Sign In',
                           style: TextStyle(
-                              color: Colors.orange,
+                              color: Colors.black,
                               fontSize: 27,
                               fontWeight: FontWeight.w700),
                         ),
                         CircleAvatar(
                           radius: 30,
-                          backgroundColor: Colors.orange,
+                          backgroundColor: Colors.deepOrangeAccent,
                           child: IconButton(
                             color: Colors.black,
                             onPressed: (){
@@ -96,11 +95,7 @@ class _MyLoginState extends State<MyLogin> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TextButton(onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context)=>const MyRegister())
-                          );
-                        }, child: Text('Sign Up',style: TextStyle(
+                        TextButton(onPressed: (){}, child: Text('Sign Up',style: TextStyle(
                           decoration: TextDecoration.underline,
                           fontSize: 20,
                           color: Colors.orange,
