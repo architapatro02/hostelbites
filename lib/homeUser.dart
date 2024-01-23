@@ -25,7 +25,8 @@ class _UserHomeState extends State<UserHome> {
       //   children: widgetList,
       // ),
       appBar: AppBar(
-        title: const Text('Bottom Navigator'),
+        title: Text('Bottom Navigator'),
+        centerTitle: true,
       ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,

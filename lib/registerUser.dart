@@ -1,5 +1,6 @@
 import 'package:hostelbites/loginUser.dart';
 import 'package:flutter/material.dart';
+import 'package:hostelbites/uiHelper.dart';
 
 class MyRegister extends StatefulWidget {
   const MyRegister({super.key});
@@ -9,6 +10,10 @@ class MyRegister extends StatefulWidget {
 }
 
 class _MyRegisterState extends State<MyRegister> {
+  TextEditingController namecontroller=TextEditingController();
+  TextEditingController idcontroller=TextEditingController();
+  TextEditingController emailcontroller=TextEditingController();
+  TextEditingController passcontroller=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,7 +29,7 @@ class _MyRegisterState extends State<MyRegister> {
         body: Stack(
           children: [
             Container(
-              padding: EdgeInsets.only(left:80,top: 150),
+              padding: EdgeInsets.only(left:80,top: 100),
               child: Text(
                 'Hostel Bites',
                 style: TextStyle(color: Colors.black87,fontSize: 50),
@@ -33,88 +38,94 @@ class _MyRegisterState extends State<MyRegister> {
             SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height*0.28,right: 35,left: 35),
+                    top: MediaQuery.of(context).size.height*0.25,right: 35,left: 35),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    TextField(
-                      //style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.white,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.black87
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          fillColor: Colors.deepOrangeAccent,
-                          filled: true,
-                          hintText: 'Student Name',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20)
-                          )
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    TextField(
-                      //style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.white,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.black87
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          fillColor: Colors.deepOrangeAccent,
-                          filled: true,
-                          hintText: 'Student Id',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20)
-                          )
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.white,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.black87
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          fillColor: Colors.deepOrangeAccent,
-                          filled: true,
-                          hintText: 'Password',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20)
-                          )
-                      ),
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
+                    Uihelper.CustomTextField(namecontroller, 'Name', Icons.person_2_outlined, false),
+                    Uihelper.CustomTextField(idcontroller, 'ID', Icons.article_outlined, false),
+                    Uihelper.CustomTextField(emailcontroller, 'Email', Icons.email_outlined, false),
+                    Uihelper.CustomTextField(passcontroller, 'Password', Icons.password_sharp, true),
+                    Uihelper.CustomButton(() { }, 'SignUp'),
+
+                    // TextField(
+                    //   //style: TextStyle(color: Colors.white),
+                    //   decoration: InputDecoration(
+                    //       enabledBorder: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(10),
+                    //         borderSide: BorderSide(
+                    //           color: Colors.white,
+                    //         ),
+                    //       ),
+                    //       focusedBorder: OutlineInputBorder(
+                    //         borderSide: BorderSide(
+                    //             color: Colors.black87
+                    //         ),
+                    //         borderRadius: BorderRadius.circular(10),
+                    //       ),
+                    //       fillColor: Colors.deepOrangeAccent,
+                    //       filled: true,
+                    //       hintText: 'Student Name',
+                    //       border: OutlineInputBorder(
+                    //           borderRadius: BorderRadius.circular(20)
+                    //       )
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 30,
+                    // ),
+                    // TextField(
+                    //   //style: TextStyle(color: Colors.white),
+                    //   decoration: InputDecoration(
+                    //       enabledBorder: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(10),
+                    //         borderSide: BorderSide(
+                    //           color: Colors.white,
+                    //         ),
+                    //       ),
+                    //       focusedBorder: OutlineInputBorder(
+                    //         borderSide: BorderSide(
+                    //             color: Colors.black87
+                    //         ),
+                    //         borderRadius: BorderRadius.circular(10),
+                    //       ),
+                    //       fillColor: Colors.deepOrangeAccent,
+                    //       filled: true,
+                    //       hintText: 'Student Id',
+                    //       border: OutlineInputBorder(
+                    //           borderRadius: BorderRadius.circular(20)
+                    //       )
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 30,
+                    // ),
+                    // TextField(
+                    //   obscureText: true,
+                    //   decoration: InputDecoration(
+                    //       enabledBorder: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(10),
+                    //         borderSide: BorderSide(
+                    //           color: Colors.white,
+                    //         ),
+                    //       ),
+                    //       focusedBorder: OutlineInputBorder(
+                    //         borderSide: BorderSide(
+                    //             color: Colors.black87
+                    //         ),
+                    //         borderRadius: BorderRadius.circular(10),
+                    //       ),
+                    //       fillColor: Colors.deepOrangeAccent,
+                    //       filled: true,
+                    //       hintText: 'Password',
+                    //       border: OutlineInputBorder(
+                    //           borderRadius: BorderRadius.circular(20)
+                    //       )
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 40,
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

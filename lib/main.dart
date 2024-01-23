@@ -11,7 +11,10 @@ import 'package:hostelbites/start.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: 'start',
+    theme: ThemeData(
+      primaryColor: Colors.purpleAccent
+    ),
+    initialRoute: 'splash',
     routes: {
       'splash': (context)=>const SplashScreen(),
       'start': (context)=>const MyStart(),

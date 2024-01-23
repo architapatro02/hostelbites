@@ -48,7 +48,7 @@ class _MyStartState extends State<MyStart> {
                   ),
                   ElevatedButton(
                     onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(
+                      Navigator.pushReplacement(context, MaterialPageRoute(
                           builder: (context)=>const MyLogin())
                       );
                     },
@@ -60,7 +60,7 @@ class _MyStartState extends State<MyStart> {
                   ),
                   ElevatedButton(
                     onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(
+                      Navigator.pushReplacement(context, MaterialPageRoute(
                           builder: (context)=>const MyLoginW())
                       );
                     },
