@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hostelbites/user/loginUser.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -14,6 +16,13 @@ class _UserHomeState extends State<UserHome> {
     Text('Menu', style: TextStyle(fontSize: 40)),
     Text('Profile', style: TextStyle(fontSize: 40))
   ];
+
+  logout()async{
+    FirebaseAuth.instance.signOut().then((value){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyLogin()));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +34,9 @@ class _UserHomeState extends State<UserHome> {
       //   children: widgetList,
       // ),
       appBar: AppBar(
-        title: const Text('Bottom Navigator'),
+        title: const Text('Home page'),
+        centerTitle: true,
+        backgroundColor: Colors.orangeAccent,
       ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
@@ -45,7 +56,7 @@ class _UserHomeState extends State<UserHome> {
           BottomNavigationBarItem(
               icon: Icon(Icons.menu_book),
               label: 'Menu',
-              backgroundColor: Colors.orangeAccent
+              backgroundColor: Colors.black
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.account_box),
@@ -53,6 +64,12 @@ class _UserHomeState extends State<UserHome> {
               backgroundColor: Colors.amber
           ),
         ],),
+      floatingActionButton: FloatingActionButton(
+        onPressed: logout,
+        tooltip: 'Increment',
+        child: const Icon(Icons.logout_outlined),
+        backgroundColor: Colors.orangeAccent,
+      ),
     );
   }
 }
