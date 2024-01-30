@@ -1,6 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hostelbites/user/loginUser.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -10,12 +8,6 @@ class UserHome extends StatefulWidget {
 }
 
 class _UserHomeState extends State<UserHome> {
-
-  logout()async{
-    FirebaseAuth.instance.signOut().then((value){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyLogin()));
-    });
-  }
   int myIndex=0;
   List<Widget>widgetList=const [
     Text('Home', style: TextStyle(fontSize: 40)),
@@ -33,9 +25,7 @@ class _UserHomeState extends State<UserHome> {
       //   children: widgetList,
       // ),
       appBar: AppBar(
-        title: Text('Bottom Navigator'),
-        backgroundColor: Colors.orangeAccent,
-        centerTitle: true,
+        title: const Text('Bottom Navigator'),
       ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
@@ -63,12 +53,6 @@ class _UserHomeState extends State<UserHome> {
               backgroundColor: Colors.amber
           ),
         ],),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.orange,
-        onPressed: logout,
-        tooltip: 'Logout',
-        child: const Icon(Icons.logout_outlined),
-      ),
     );
   }
 }
