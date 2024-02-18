@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hostelbites/user/Attendance.dart';
 import 'package:hostelbites/user/Note.dart';
@@ -5,7 +6,9 @@ import 'package:hostelbites/user/profile.dart';
 import 'package:hostelbites/user/viewmenu.dart';
 
 class NavBar extends StatelessWidget {
-  const NavBar({super.key});
+  NavBar({super.key});
+
+  final user=FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +16,8 @@ class NavBar extends StatelessWidget {
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text('Khushi'),
-            accountEmail: Text('khushi172004@gmail.com'),
+            accountName: Text('Hello!!'),
+            accountEmail: Text(user.email!),
             currentAccountPicture: InkWell(
               onTap: () {
                 Navigator.push(

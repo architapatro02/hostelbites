@@ -193,50 +193,6 @@ class _MyRegisterPageState extends State<MyRegisterPage> {
                   height: 10,
                 ),
 
-                // //or continue with
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                //   child: Row(
-                //     children: [
-                //       Expanded(
-                //         child: Divider(
-                //           thickness: 0.5,
-                //           color: Colors.brown[250],
-                //         ),
-                //       ),
-                //       Padding(
-                //         padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                //         child: Text(
-                //           "or continue with",
-                //           style: TextStyle(color: Colors.black),
-                //         ),
-                //       ),
-                //       Expanded(
-                //         child: Divider(
-                //           thickness: 0.5,
-                //           color: Colors.brown[250],
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                //
-                // SizedBox(
-                //   height: 10,
-                // ),
-                //
-                // //google sign in
-                // GestureDetector(
-                //   onTap: AuthService().signInWithGoogle,
-                //   child: Image.asset(
-                //     'assets/images/googlelogo.jpg',
-                //     height: 50,
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 15,
-                // ),
-
                 //not registered yet?
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
