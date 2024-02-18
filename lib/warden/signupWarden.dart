@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../components/mybutton.dart';
 import '../components/mytextfield.dart';
 
@@ -18,7 +17,7 @@ class _MyRegisterPageWState extends State<MyRegisterPageW> {
   TextEditingController namecontroller = TextEditingController();
   TextEditingController idcontroller = TextEditingController();
   TextEditingController hostelcontroller = TextEditingController();
-  TextEditingController roomcontroller = TextEditingController();
+  TextEditingController phonecontroller = TextEditingController();
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passcontroller = TextEditingController();
   TextEditingController confirmpasscontroller = TextEditingController();
@@ -45,7 +44,7 @@ class _MyRegisterPageWState extends State<MyRegisterPageW> {
         namecontroller.text.trim(),
         idcontroller.text.trim(),
         hostelcontroller.text.trim(),
-        int.parse(roomcontroller.text.trim()),
+        int.parse(phonecontroller.text.trim()),
         emailcontroller.text.trim(),
       );
       Navigator.pop(context);
@@ -55,17 +54,17 @@ class _MyRegisterPageWState extends State<MyRegisterPageW> {
 
   //add user details
   void addUserDetails(
-      String name, String studID, String hostel, int room, String email) async {
+      String name, String wardID, String hostel, int phone, String email) async {
     await FirebaseFirestore.instance.collection('warden').add({
       'Name': name,
-      'Student_Id': studID,
+      'Warden_Id': wardID,
       'Hostel': hostel,
-      'Room': room,
+      'PhoneNo': phone,
       'Email': email,
     });
   }
 
-  //password = confirm passowrd
+  //password = confirm password
   bool passwordConfirmed() {
     if (passcontroller.text.trim() == confirmpasscontroller.text.trim()) {
       return true;
@@ -102,13 +101,8 @@ class _MyRegisterPageWState extends State<MyRegisterPageW> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //Icons
-                // Icon(
-                //   Icons.food_bank_outlined,
-                //   size: 100,
-                // ),
                 //Welcome to Hostel Bites
-                Text('Annyeong!!',
+                Text('JIJI!!',
                     style: GoogleFonts.montserrat(
                       fontSize: 52,
                     )),
@@ -140,6 +134,8 @@ class _MyRegisterPageWState extends State<MyRegisterPageW> {
                 SizedBox(
                   height: 5,
                 ),
+
+                //Enter your Hostel Name
                 MyTextField(
                     controller: hostelcontroller,
                     hintText: 'Enter your Hostel name',
@@ -148,10 +144,11 @@ class _MyRegisterPageWState extends State<MyRegisterPageW> {
                 SizedBox(
                   height: 5,
                 ),
-                //Enter your Room No
+
+                //Enter your Phone No
                 MyTextField(
-                    controller: roomcontroller,
-                    hintText: 'Enter your Room No',
+                    controller: phonecontroller,
+                    hintText: 'Enter your Phone No',
                     obscureText: false),
                 const SizedBox(
                   height: 5,

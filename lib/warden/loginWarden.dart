@@ -33,7 +33,7 @@ class _MyLoginWState extends State<MyLoginW> {
     );
     //try sign in
     try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailcontroller.text, password: passcontroller.text);
       //pop the loading circle
       Navigator.pop(context);
@@ -63,24 +63,6 @@ class _MyLoginWState extends State<MyLoginW> {
     );
   }
 
-  // login(String email, String password) async {
-  //   if (email == "" && password == "") {
-  //     return Uihelper.CustomAlertBox(context, "Enter Required Fields");
-  //   } else {
-  //     UserCredential? usercredential;
-  //     try {
-  //       usercredential = await FirebaseAuth.instance
-  //           .signInWithEmailAndPassword(email: email, password: password)
-  //           .then((value) {
-  //         Navigator.pushReplacement(
-  //             context, MaterialPageRoute(builder: (context) => UserHome()));
-  //       });
-  //     } on FirebaseAuthException catch (ex) {
-  //       return Uihelper.CustomAlertBox(context, ex.code.toString());
-  //     }
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,7 +79,7 @@ class _MyLoginWState extends State<MyLoginW> {
                   size: 100,
                 ),
                 //Welcome to Hostel Bites
-                Text('Annyeong!!', style: GoogleFonts.montserrat(fontSize: 52)),
+                Text('JIJI!!', style: GoogleFonts.montserrat(fontSize: 52)),
                 SizedBox(
                   height: 10,
                 ),

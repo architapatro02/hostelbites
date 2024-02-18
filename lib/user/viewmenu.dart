@@ -16,12 +16,14 @@ class _MenuPageState extends State<MenuPage> {
       // ),
       appBar: AppBar(
         centerTitle: true,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.restaurant_menu),
             SizedBox(width: 2),
-            Text('Menu')
+            Text('Menu',style: TextStyle(color: Colors.black),)
           ],),
       ),
       body: ListView(
