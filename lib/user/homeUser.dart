@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hostelbites/user/loginUser.dart';
+import 'package:hostelbites/user/NavBar.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -24,6 +24,7 @@ class _UserHomeState extends State<UserHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
       body: Center(
         child: widgetList[myIndex],
       ),
