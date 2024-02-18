@@ -17,10 +17,8 @@ class _UserHomeState extends State<UserHome> {
     Text('Profile', style: TextStyle(fontSize: 40))
   ];
 
-  logout()async{
-    FirebaseAuth.instance.signOut().then((value){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyLogin()));
-    });
+  signout()async{
+    FirebaseAuth.instance.signOut().then((value){});
   }
 
   @override
@@ -36,7 +34,7 @@ class _UserHomeState extends State<UserHome> {
       appBar: AppBar(
         title: const Text('Home page'),
         centerTitle: true,
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor: Colors.brown[300],
       ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
@@ -52,7 +50,7 @@ class _UserHomeState extends State<UserHome> {
           BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
-              backgroundColor: Colors.orange),
+              backgroundColor: Colors.brown),
           BottomNavigationBarItem(
               icon: Icon(Icons.menu_book),
               label: 'Menu',
@@ -65,10 +63,10 @@ class _UserHomeState extends State<UserHome> {
           ),
         ],),
       floatingActionButton: FloatingActionButton(
-        onPressed: logout,
-        tooltip: 'Increment',
+        onPressed: signout,
+        tooltip: 'Log OUT',
         child: const Icon(Icons.logout_outlined),
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor: Colors.brown,
       ),
     );
   }

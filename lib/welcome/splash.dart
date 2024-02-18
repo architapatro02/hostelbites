@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hostelbites/welcome/start.dart';
-
+import 'package:lottie/lottie.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,26 +17,35 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    Timer(Duration(seconds: 2), () {
-      Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (context)=>MyStart(),
-      ));
+    Timer(Duration(seconds: 4), () {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyStart(),
+          ));
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.amber,
-        child: Center(child: Text('HOSTEL BITES', style: TextStyle(
-            fontSize: 34,
-            fontWeight: FontWeight.w700,
-            color: Colors.black87,
-            fontFamily: 'FontMain'),
-        )),
+      backgroundColor: Colors.brown[300],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Lottie.asset('assets/animation/intro.json'),
+            // Icon(
+            //   Icons.food_bank_outlined,
+            //   size: 60,
+            // ),
+            SizedBox(height: 20,),
+            Text(
+              'Hostel Bites',
+              style: GoogleFonts.playfairDisplay(fontSize: 52),
+            )
+          ],
+        ),
       ),
     );
   }

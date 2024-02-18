@@ -12,7 +12,20 @@
           "package_name": "com.example.hostelbites"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "210709149272-g693kjmuhpgprb4m0la8kp7e8gl7g2h0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hostelbites",
+            "certificate_hash": "a9c3eda8df4af4af0e404d5f1b6fb3e5102f50be"
+          }
+        },
+        {
+          "client_id": "210709149272-8k8s21odc32gpujaa4c20068lv3irr2e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyD_2UR7ottKmZAysDBxNI_skXu6zmt8FlI"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210709149272-8k8s21odc32gpujaa4c20068lv3irr2e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "210709149272-1l2v1id99plhgnctaba2rep8702j1ea4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.hostelbites"
+              }
+            }
+          ]
         }
       }
     }

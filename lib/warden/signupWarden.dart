@@ -1,19 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:hostelbites/components/mybutton.dart';
 import 'package:flutter/material.dart';
-import 'package:hostelbites/components/mytextfield.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class MyRegisterPage extends StatefulWidget {
+import '../components/mybutton.dart';
+import '../components/mytextfield.dart';
+
+class MyRegisterPageW extends StatefulWidget {
   final Function()? onTap;
-  const MyRegisterPage({super.key, required this.onTap});
-
+  const MyRegisterPageW({super.key, required this.onTap});
   @override
-  _MyRegisterPageState createState() => _MyRegisterPageState();
+  State<MyRegisterPageW> createState() => _MyRegisterPageWState();
 }
 
-class _MyRegisterPageState extends State<MyRegisterPage> {
+class _MyRegisterPageWState extends State<MyRegisterPageW> {
   //Text Editing controllor
   TextEditingController namecontroller = TextEditingController();
   TextEditingController idcontroller = TextEditingController();
@@ -56,7 +56,7 @@ class _MyRegisterPageState extends State<MyRegisterPage> {
   //add user details
   void addUserDetails(
       String name, String studID, String hostel, int room, String email) async {
-    await FirebaseFirestore.instance.collection('users').add({
+    await FirebaseFirestore.instance.collection('warden').add({
       'Name': name,
       'Student_Id': studID,
       'Hostel': hostel,
@@ -153,7 +153,7 @@ class _MyRegisterPageState extends State<MyRegisterPage> {
                     controller: roomcontroller,
                     hintText: 'Enter your Room No',
                     obscureText: false),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
 

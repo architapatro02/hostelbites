@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hostelbites/auth/authpages.dart';
+import 'package:hostelbites/auth/authpagesW.dart';
 import 'package:hostelbites/user/loginUser.dart';
 import 'package:hostelbites/warden/loginWarden.dart';
 
@@ -13,61 +16,57 @@ class _MyStartState extends State<MyStart> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/bg1.jpg'), fit: BoxFit.cover)),
+      // decoration: BoxDecoration(
+      //     image: DecorationImage(
+      //         image: AssetImage('assets/images/brown background.jpg'),
+      //         fit: BoxFit.cover)),
       //debugShowCheckedModeBanner: false,
       child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
+        backgroundColor: Colors.brown.shade300,
         body: Stack(
           children: [
-            Container(
-              color: Colors.transparent,
-              padding: EdgeInsets.only(left:MediaQuery.of(context).size.width*0.2,top: MediaQuery.of(context).size.height*0.05),
-              child: Text(
-                'Hostel Bites',
-                style: TextStyle(color: Colors.orangeAccent,fontSize: 50,fontFamily: 'FontMain',fontWeight: FontWeight.bold),
-              ),
-            ),
             Center(
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    Icon(Icons.food_bank_outlined, size: 60),
                     Text(
-                      'Login As', style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.w300,
-                      color: Colors.black87,
+                      'Hostel Bites',
+                      style: GoogleFonts.playfairDisplay(fontSize: 52),
                     ),
+                    SizedBox(height: 50,),
+                    Text(
+                      'Login As',
+                      style: GoogleFonts.roboto(fontSize: 30),
                     ),
                     ElevatedButton(
-                      onPressed: (){
-                        Navigator.pushReplacement(context, MaterialPageRoute(
-                            builder: (context)=>const MyLogin())
-                        );
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AuthPage()));
                       },
                       child: Text('Student'),
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.orange),
-                        foregroundColor: MaterialStateProperty.all(Colors.black)
-                      ),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.white70),
+                          foregroundColor:
+                              MaterialStateProperty.all(Colors.black)),
                     ),
                     ElevatedButton(
-                      onPressed: (){
-                        Navigator.pushReplacement(context, MaterialPageRoute(
-                            builder: (context)=>const MyLoginW())
-                        );
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AuthPageW()));
                       },
                       child: Text('Warden'),
                       style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.orange),
-                          foregroundColor: MaterialStateProperty.all(Colors.black)
-                      ),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.white70),
+                          foregroundColor:
+                              MaterialStateProperty.all(Colors.black)),
                     )
                   ],
                 ),
@@ -79,7 +78,6 @@ class _MyStartState extends State<MyStart> {
                 //       foregroundColor: MaterialStateProperty.all(Colors.black)
                 //   ),
                 // ),
-
               ),
             )
           ],

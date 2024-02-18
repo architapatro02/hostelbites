@@ -2,7 +2,7 @@
     <application
         android:label="hostelbites"
         android:name="${applicationName}"
-        android:icon="@mipmap/hostel_bites">
+        android:icon="@mipmap/brownicon">
         <activity
             android:name=".MainActivity"
             android:exported="true"
