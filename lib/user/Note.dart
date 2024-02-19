@@ -9,6 +9,8 @@ class SpecialNoteScreen extends StatefulWidget {
 
 class _SpecialNoteScreenState extends State<SpecialNoteScreen>{
 
+  final _textController =TextEditingController();
+  String userPost='';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,35 +36,36 @@ class _SpecialNoteScreenState extends State<SpecialNoteScreen>{
               ),
             ),
           ),
+          Padding(padding: const EdgeInsets.all(20.0),
+              child:Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextField(
+                    controller: _textController,
+                    decoration: InputDecoration(
+                      hintText: 'what\'s on your mind?',
+                      border:  const OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        onPressed: (){
+                          _textController.clear();
+                        },
+                        icon: const Icon(Icons.clear),
+                      ),
+                    ),
+                  ),
+                  MaterialButton(
+                    onPressed: (){
+                      userPost =_textController.text;
+                    },
+                    color: Colors.brown[200],
+                    child: const Text('Post'),
+                  ),
+                ],
+              ))
         ],
+
       ),
     );
   }
 }
-
-
-// body: Padding(
-//   padding: const EdgeInsets.all(16),
-//   child: Column(
-//     crossAxisAlignment: CrossAxisAlignment.stretch,
-//     children: [
-//       const SizedBox(height: 16),
-//       const Text(
-//         'Welcome to the Special Note for Students!',
-//         style: TextStyle(
-//           color: Colors.brown,
-//           fontSize: 24,
-//           fontWeight: FontWeight.bold,
-//         ),
-//       ),
-//       const SizedBox(height: 16),
-//       const Text(
-//         'This is a special note for students that contains some important information or announcements. Please read it carefully and take necessary actions if needed.',
-//         style: TextStyle(
-//           fontSize: 18,
-//         ),
-//       ),
-//       const SizedBox(height: 16),
-//     ],
-//   ),
-// ),
