@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hostelbites/user/Attendance.dart';
+import 'package:hostelbites/user/Feedback.dart';
 import 'package:hostelbites/user/Note.dart';
 import 'package:hostelbites/user/milkpage.dart';
 import 'package:hostelbites/user/profile.dart';
@@ -16,6 +17,8 @@ class NavBar extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
+
+
           UserAccountsDrawerHeader(
             accountName: Text('Hello!!'),
             accountEmail: Text(user.email!),
@@ -99,7 +102,14 @@ class NavBar extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.feedback, color: Colors.brown),
             title: Text('Feedback'),
-            onTap: () => null,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FeedbackScreen(),
+                ),
+              );
+            },
           ),
           Divider(
             height: 10.0,
