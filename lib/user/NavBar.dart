@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hostelbites/user/Attendance.dart';
 import 'package:hostelbites/user/Note.dart';
+import 'package:hostelbites/user/milkpage.dart';
 import 'package:hostelbites/user/profile.dart';
 import 'package:hostelbites/user/viewmenu.dart';
 
@@ -69,7 +70,14 @@ class NavBar extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.local_drink, color: Colors.brown),
             title: Text('Milk Details'),
-            onTap: () => null,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MilkDetailsPage(),
+                ),
+              );
+            },
           ),
           ListTile(
             leading: Icon(Icons.note_alt, color: Colors.brown),
