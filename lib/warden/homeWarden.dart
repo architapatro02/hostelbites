@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hostelbites/warden/NavBar.dart';
 
 class WardenHome extends StatefulWidget {
   const WardenHome({super.key});
@@ -10,6 +11,13 @@ class WardenHome extends StatefulWidget {
 class _WardenHomeState extends State<WardenHome> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      drawer: NavBar(),
+      appBar: AppBar(
+        title: const Text('Home page'),
+        centerTitle: true,
+        backgroundColor: Colors.brown[300],
+      ),
+    );
   }
 }

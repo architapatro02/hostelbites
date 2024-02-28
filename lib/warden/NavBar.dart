@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hostelbites/user/Attendance.dart';
-import 'package:hostelbites/user/Feedback.dart';
-import 'package:hostelbites/user/Note.dart';
-import 'package:hostelbites/user/milkpage.dart';
-import 'package:hostelbites/user/profile.dart';
-import 'package:hostelbites/user/viewmenu.dart';
+// import 'package:hostelbites/user/Attendance.dart';
+// import 'package:hostelbites/user/Feedback.dart';
+// import 'package:hostelbites/user/Note.dart';
+// import 'package:hostelbites/user/milkpage.dart';
+ import 'package:hostelbites/warden/profile.dart';
+// import 'package:hostelbites/user/viewmenu.dart';
 
 class NavBar extends StatelessWidget {
   NavBar({super.key});
@@ -18,7 +18,7 @@ class NavBar extends StatelessWidget {
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text('Hello!!'),
+            accountName: Text('Hello Jiji!!'),
             accountEmail: Text(user.email!),
             currentAccountPicture: InkWell(
               onTap: () {
@@ -45,68 +45,75 @@ class NavBar extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.restaurant_menu, color: Colors.brown),
-            title: Text('View Menu'),
+            leading: Icon(Icons.manage_accounts, color: Colors.brown),
+            title: Text('Manage Students'),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MenuPage(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => MenuPage(),
+              //   ),
+              // );
             },
           ),
           ListTile(
-            leading: Icon(Icons.person, color: Colors.brown),
-            title: Text('Mark Attendance'),
+            leading: Icon(Icons.restaurant_menu, color: Colors.brown),
+            title: Text('Edit Menu'),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MarkedAttendancePage(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => MenuPage(),
+              //   ),
+              // );
             },
           ),
           ListTile(
             leading: Icon(Icons.local_drink, color: Colors.brown),
             title: Text('Milk Details'),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MilkDetailsPage(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => MarkedAttendancePage(),
+              //   ),
+              // );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.person, color: Colors.brown),
+            title: Text('View Attendance'),
+            onTap: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => MilkDetailsPage(),
+              //   ),
+              // );
             },
           ),
           ListTile(
             leading: Icon(Icons.note_alt, color: Colors.brown),
-            title: Text('Special Note'),
+            title: Text('Important Note'),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SpecialNoteScreen(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => SpecialNoteScreen(),
+              //   ),
+              // );
             },
-          ),
-          ListTile(
-            leading: Icon(Icons.notifications, color: Colors.brown),
-            title: Text('Notice'),
-            onTap: () => null,
           ),
           ListTile(
             leading: Icon(Icons.feedback, color: Colors.brown),
             title: Text('Feedback'),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => FeedbackScreen(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => FeedbackScreen(),
+              //   ),
+              // );
             },
           ),
           Divider(
