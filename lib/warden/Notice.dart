@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+//import 'package:google_fonts/google_fonts.dart';
 class SpecialNoteScreen extends StatefulWidget {
   const SpecialNoteScreen({Key? key}) : super(key: key);
 
@@ -24,7 +24,7 @@ class _SpecialNoteScreenState extends State<SpecialNoteScreen>{
           children: [
             Icon(Icons.account_balance_wallet),
             SizedBox(width: 2),
-            Text('Notice',)
+            Text('Important Notice',)
           ],),
       ),
       body: ListView(
@@ -34,8 +34,8 @@ class _SpecialNoteScreenState extends State<SpecialNoteScreen>{
             child: Container(height: 200,
               color: Colors.brown[300],
               child: Center(
-                child: Text('SPECIAL NOTE !!!',
-                    style:GoogleFonts.roboto(fontSize: 40,),
+                child: Text('IMPORTANT NOTICE',
+                    style:TextStyle(fontSize: 35,),
                     textAlign: TextAlign.center),
               ),
             ),
@@ -49,7 +49,7 @@ class _SpecialNoteScreenState extends State<SpecialNoteScreen>{
                   TextField(
                     controller: _textController,
                     decoration: InputDecoration(
-                      hintText: 'what\'s on your mind?',
+                      hintText: 'Important notice for student!',
                       border:  const OutlineInputBorder(),
                       suffixIcon: IconButton(
                         onPressed: (){

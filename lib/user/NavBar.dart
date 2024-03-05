@@ -92,11 +92,11 @@ class NavBar extends StatelessWidget {
               );
             },
           ),
-          ListTile(
-            leading: Icon(Icons.notifications, color: Colors.brown),
-            title: Text('Notice'),
-            onTap: () => null,
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.notifications, color: Colors.brown),
+          //   title: Text('Notice'),
+          //   onTap: ()  =>null,
+          // ),
           ListTile(
             leading: Icon(Icons.feedback, color: Colors.brown),
             title: Text('Feedback'),
