@@ -12,12 +12,12 @@ class WardenHome extends StatefulWidget {
 
 class _WardenHomeState extends State<WardenHome> {
   // Function to navigate to the NoticePage
-  void _navigateToNoticePage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => NotePage()),
-    );
-  }
+  // void _navigateToNoticePage() {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => NotePage()),
+  //   );
+  // }
 
   signout() async {
     FirebaseAuth.instance.signOut().then((value) {});
@@ -44,6 +44,7 @@ class _WardenHomeState extends State<WardenHome> {
         centerTitle: true,
         backgroundColor: Colors.brown[300],
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: signout,
         tooltip: 'Log OUT',
