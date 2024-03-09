@@ -65,7 +65,7 @@ class _ShowFeedbackPageState extends State<ShowFeedbackPage> {
         columnSpacing: 20.0,
         headingRowHeight: 40.0,
         dataRowHeight: 60.0,
-        horizontalMargin: 10.0,
+        horizontalMargin: 6.0,
         columns: [
           DataColumn(
             label: Text(

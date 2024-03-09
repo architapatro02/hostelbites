@@ -5,7 +5,7 @@ import 'package:hostelbites/user/Feedback.dart';
 import 'package:hostelbites/user/NoteStudent.dart';
 import 'package:hostelbites/user/milkpage.dart';
 import 'package:hostelbites/user/profile.dart';
-import 'package:hostelbites/user/viewmenu.dart';
+
 
 class NavBar extends StatefulWidget {
   NavBar({super.key});
@@ -52,18 +52,6 @@ class _NavBarState extends State<NavBar> {
             decoration: BoxDecoration(
               color: Colors.brown[300],
             ),
-          ),
-          ListTile(
-            leading: Icon(Icons.restaurant_menu, color: Colors.brown),
-            title: Text('View Menu'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MenuPage(),
-                ),
-              );
-            },
           ),
           ListTile(
             leading: Icon(Icons.person, color: Colors.brown),

@@ -134,7 +134,7 @@ class _EditMenuState extends State<EditMenu> {
         ),
       ),
       style: ElevatedButton.styleFrom(
-        primary: Colors.brown[300], // Change the button color here
+        backgroundColor: Colors.brown[300], // Change the button color here
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),

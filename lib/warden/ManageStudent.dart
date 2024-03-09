@@ -146,7 +146,7 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
                   Navigator.pop(context);
                 },
                 style: TextButton.styleFrom(
-                  primary: Colors.black, // Set the text color to black
+                  foregroundColor: Colors.black, // Set the text color to black
                 ),
                 child: Text('Close'),
               ),
