@@ -12,9 +12,6 @@ class UserHome extends StatefulWidget {
 }
 
 class _UserHomeState extends State<UserHome> {
-  // signout() async {
-  //   FirebaseAuth.instance.signOut().then((value) {});
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -389,12 +386,6 @@ class _UserHomeState extends State<UserHome> {
           ],
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: signout,
-      //   tooltip: 'Log OUT',
-      //   child: const Icon(Icons.exit_to_app_sharp),
-      //   backgroundColor: Colors.brown,
-      // ),
     );
   }
 }

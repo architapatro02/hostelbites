@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hostelbites/components/mytextbox.dart';
+import 'package:hostelbites/warden/wardenhome.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -158,7 +159,63 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: CircularProgressIndicator(),
             );
           },
-        )
+        ),
+      bottomNavigationBar: _buildBottomNavigationBar(context),
+    );
+  }
+  Widget _buildBottomNavigationBar(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.brown.withOpacity(0.2),
+            spreadRadius: 5,
+            blurRadius: 10,
+          )
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          selectedItemColor: Colors.grey.withOpacity(0.5),
+          unselectedItemColor: Colors.brown[200],
+          items: [
+            BottomNavigationBarItem(
+              label: "Home",
+              icon: Icon(
+                Icons.home_rounded,
+                size: 30,
+              ),
+            ),
+            BottomNavigationBarItem(
+              label: "Profile",
+              icon: Icon(
+                Icons.person_rounded,
+                size: 30,
+              ),
+            ),
+          ],
+          onTap: (index) {
+            if (index == 0) {
+              // Navigate to the home screen (WardenHome) when "Home" icon is tapped
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => WardenHome()),
+              );
+            }
+          },
+        ),
+      ),
     );
   }
 }
