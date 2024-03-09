@@ -62,24 +62,6 @@ class _MyLoginState extends State<MyLogin> {
     );
   }
 
-  // login(String email, String password) async {
-  //   if (email == "" && password == "") {
-  //     return Uihelper.CustomAlertBox(context, "Enter Required Fields");
-  //   } else {
-  //     UserCredential? usercredential;
-  //     try {
-  //       usercredential = await FirebaseAuth.instance
-  //           .signInWithEmailAndPassword(email: email, password: password)
-  //           .then((value) {
-  //         Navigator.pushReplacement(
-  //             context, MaterialPageRoute(builder: (context) => UserHome()));
-  //       });
-  //     } on FirebaseAuthException catch (ex) {
-  //       return Uihelper.CustomAlertBox(context, ex.code.toString());
-  //     }
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

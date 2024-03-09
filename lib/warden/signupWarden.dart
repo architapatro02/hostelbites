@@ -33,43 +33,45 @@ class _MyRegisterPageWState extends State<MyRegisterPageW> {
         );
       },
     );
-    //check if pass=confirm pass
-    if (passwordConfirmed()) {
-      //create user
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailcontroller.text, password: passcontroller.text);
 
-      //add user details
-      addUserDetails(
-        namecontroller.text.trim(),
-        idcontroller.text.trim(),
-        hostelcontroller.text.trim(),
-        int.parse(phonecontroller.text.trim()),
-        emailcontroller.text.trim(),
-      );
+    // Check if pass = confirm pass
+    if (passcontroller.text != confirmpasscontroller.text) {
       Navigator.pop(context);
+      showErrorMessage("Passwords don't match");
+      return;
     }
-    Navigator.pop(context);
-  }
 
-  //add user details
-  void addUserDetails(
-      String name, String wardID, String hostel, int phone, String email) async {
-    await FirebaseFirestore.instance.collection('warden').add({
-      'Name': name,
-      'Warden_Id': wardID,
-      'Hostel': hostel,
-      'PhoneNo': phone,
-      'Email': email,
-    });
-  }
+    // Try creating the user
+    try {
+      UserCredential userCredential =
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailcontroller.text,
+        password: passcontroller.text,
+      );
 
-  //password = confirm password
-  bool passwordConfirmed() {
-    if (passcontroller.text.trim() == confirmpasscontroller.text.trim()) {
-      return true;
-    } else {
-      return false;
+      // After creating user, set specific document ID for the user in 'users' collection
+      String? userId = userCredential.user!.email; // Get the UID
+      DocumentReference userDocRef =
+      FirebaseFirestore.instance.collection("warden").doc(userId);
+
+      // Check if the 'users' collection already has a document with the user ID
+      if (!(await userDocRef.get()).exists) {
+        // If not, create the document
+        await userDocRef.set({
+          'Name': namecontroller.text,
+          'Warden_ID': idcontroller.text,
+          'Hostel': hostelcontroller.text,
+          'Phone': phonecontroller.text,
+          'Email': emailcontroller.text,
+        });
+      }
+
+      if (context.mounted) Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      // Pop the loading circle
+      Navigator.pop(context);
+      // Show error message
+      showErrorMessage(e.code);
     }
   }
 
@@ -129,7 +131,7 @@ class _MyRegisterPageWState extends State<MyRegisterPageW> {
                 //Enter your ID
                 MyTextField(
                     controller: idcontroller,
-                    hintText: 'Enter your Student ID',
+                    hintText: 'Enter your Warden ID',
                     obscureText: false),
                 SizedBox(
                   height: 5,

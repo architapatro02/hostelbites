@@ -1,16 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:hostelbites/user/Attendance.dart';
-// import 'package:hostelbites/user/Feedback.dart';
-// import 'package:hostelbites/user/milkpage.dart';
+import 'package:hostelbites/warden/ManageStudent.dart';
+import 'package:hostelbites/warden/ViewFeedbacks.dart';
  import 'package:hostelbites/warden/profile.dart';
 import 'package:hostelbites/warden/EditMenu.dart';
-import 'package:hostelbites/warden/Notice.dart';
+import 'package:hostelbites/warden/NoticeWarden.dart';
 
 class NavBar extends StatelessWidget {
   NavBar({super.key});
 
   final user=FirebaseAuth.instance.currentUser!;
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +48,12 @@ class NavBar extends StatelessWidget {
             leading: Icon(Icons.manage_accounts, color: Colors.brown),
             title: Text('Manage Students'),
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => MenuPage(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ManageStudentsPage(),
+                ),
+              );
             },
           ),
           ListTile(
@@ -106,14 +106,14 @@ class NavBar extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.feedback, color: Colors.brown),
-            title: Text('Feedback'),
+            title: Text('Feedbacks'),
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => FeedbackScreen(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ShowFeedbackPage(),
+                ),
+              );
             },
           ),
           Divider(

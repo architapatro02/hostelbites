@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hostelbites/user/Attendance.dart';
 import 'package:hostelbites/user/Feedback.dart';
-import 'package:hostelbites/user/Note.dart';
+import 'package:hostelbites/user/NoteStudent.dart';
 import 'package:hostelbites/user/milkpage.dart';
 import 'package:hostelbites/user/profile.dart';
 import 'package:hostelbites/user/viewmenu.dart';

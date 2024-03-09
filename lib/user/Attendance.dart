@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hostelbites/user/togglebuttonform.dart';
-//import 'package:google_fonts/google_fonts.dart';
+import 'package:hostelbites/components/togglebuttonform.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MarkedAttendancePage extends StatefulWidget {
   const MarkedAttendancePage({Key? key}) : super(key: key);

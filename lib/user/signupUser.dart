@@ -25,54 +25,55 @@ class _MyRegisterPageState extends State<MyRegisterPage> {
 
   //sign in method
   void signUserUp() async {
-    //show loading circle
+    // Show loading circle
     showDialog(
       context: context,
-      builder: (context) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
     );
-    //check if pass=confirm pass
-    if (passwordConfirmed()) {
-      //create user
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailcontroller.text, password: passcontroller.text);
 
-      //add user details
-      addUserDetails(
-        namecontroller.text.trim(),
-        idcontroller.text.trim(),
-        hostelcontroller.text.trim(),
-        int.parse(roomcontroller.text.trim()),
-        emailcontroller.text.trim(),
-      );
+    // Check if pass = confirm pass
+    if (passcontroller.text != confirmpasscontroller.text) {
       Navigator.pop(context);
+      showErrorMessage("Passwords don't match");
+      return;
     }
-    Navigator.pop(context);
+
+    // Try creating the user
+    try {
+      UserCredential userCredential =
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailcontroller.text,
+        password: passcontroller.text,
+      );
+
+      // After creating user, set specific document ID for the user in 'users' collection
+      String? userId = userCredential.user!.email; // Get the UID
+      DocumentReference userDocRef =
+      FirebaseFirestore.instance.collection("users").doc(userId);
+
+      // Check if the 'users' collection already has a document with the user ID
+      if (!(await userDocRef.get()).exists) {
+        // If not, create the document
+        await userDocRef.set({
+          'Name': namecontroller.text,
+          'ID': idcontroller.text,
+          'Hostel': hostelcontroller.text,
+          'Room': roomcontroller.text,
+          'Email': emailcontroller.text,
+        });
+      }
+
+      if (context.mounted) Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      // Pop the loading circle
+      Navigator.pop(context);
+      // Show error message
+      showErrorMessage(e.code);
+    }
   }
 
-  //add user details
-  void addUserDetails(
-      String name, String studID, String hostel, int room, String email) async {
-    await FirebaseFirestore.instance.collection('users').add({
-      'Name': name,
-      'Student_Id': studID,
-      'Hostel': hostel,
-      'Room': room,
-      'Email': email,
-    });
-  }
-
-  //password = confirm passowrd
-  bool passwordConfirmed() {
-    if (passcontroller.text.trim() == confirmpasscontroller.text.trim()) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   //error message to user
   void showErrorMessage(String message) {
@@ -102,11 +103,6 @@ class _MyRegisterPageState extends State<MyRegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //Icons
-                // Icon(
-                //   Icons.food_bank_outlined,
-                //   size: 100,
-                // ),
                 //Welcome to Hostel Bites
                 Text('Annyeong!!',
                     style: GoogleFonts.montserrat(

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hostelbites/user/NavBar.dart';
+import 'NoticeStudent.dart'; // Import your notifications page
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -10,24 +11,27 @@ class UserHome extends StatefulWidget {
 }
 
 class _UserHomeState extends State<UserHome> {
-  // int myIndex=0;
-  // List<Widget>widgetList=const [
-  //   Text('Home', style: TextStyle(fontSize: 40)),
-  //   Text('Menu', style: TextStyle(fontSize: 40)),
-  //   Text('Profile', style: TextStyle(fontSize: 40))
-  // ];
-
-  signout()async{
-    FirebaseAuth.instance.signOut().then((value){});
+  signout() async {
+    FirebaseAuth.instance.signOut().then((value) {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: NavBar(),
-      // body: Center(
-      // ),
       appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () {
+              // Navigate to the notifications page
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationsPage()),
+              );
+            },
+          ),
+        ],
         title: const Text('Home page'),
         centerTitle: true,
         backgroundColor: Colors.brown[300],

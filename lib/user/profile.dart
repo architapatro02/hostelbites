@@ -1,65 +1,164 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-class ProfileScreen extends StatelessWidget {
+import 'package:hostelbites/components/mytextbox.dart';
+
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  //user
+  final currentUser = FirebaseAuth.instance.currentUser!;
+  //all users
+  final usersCollection = FirebaseFirestore.instance.collection("users");
+
+  //edit field
+  Future<void> editfield(String field) async {
+    String newValue = "";
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.brown[200],
+        title: Text(
+          "Edit $field",
+          style: TextStyle(color: Colors.white),
+        ),
+        content: TextField(
+          autofocus: true,
+          style: TextStyle(color: Colors.white),
+          decoration: InputDecoration(
+            hintText: "Enter new $field",
+            hintStyle: TextStyle(color: Colors.white54)
+          ),
+          onChanged: (value){
+            newValue = value;
+          },
+        ),
+
+        actions: [
+          //cancel button
+          TextButton(
+            child: Text(
+              'Cancel',
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: ()=>Navigator.pop(context),
+          ),
+
+          //save button
+          TextButton(
+            child: Text(
+              'Save',
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: ()=>Navigator.of(context).pop(newValue),
+          ),
+        ],
+      ),
+    );
+
+    //update in firestore
+    if(newValue.trim().length>0){
+      //only update if there is something in the textfield
+      await usersCollection.doc(currentUser.email).update({field: newValue});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown[200],
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            const SizedBox(height: 60),
-            CircleAvatar(
-              radius: 70,
-              backgroundImage: AssetImage('assets/images/profile.png'),
-            ),
-            const SizedBox(height: 50),
-            itemProfile('Name', 'Harshita Garg', CupertinoIcons.person),
-            const SizedBox(height: 20),
-            itemProfile('Email id', 'btbti21071_harshita@bansthali.in', CupertinoIcons.mail_solid),
-            const SizedBox(height: 20),
-            itemProfile('Hostel Name', 'Shri Shanta Gram', CupertinoIcons.house_fill),
-            const SizedBox(height: 20),
-            itemProfile('Room no', '76', CupertinoIcons.number_circle),
-            const SizedBox(height: 20),
-            ElevatedButton(
-                onPressed:(){},
-                style: ElevatedButton.styleFrom(
-                  padding:
-                  const EdgeInsets.all(15),
-                ),
-                child:
-                const Text('Edit Profile')
-            )
-          ],
+        backgroundColor: Colors.brown[200],
+        appBar: AppBar(
+          title: Text('Profile'),
+          backgroundColor: Colors.brown,
+          centerTitle: true,
         ),
-      ),
-    );
-  }
-  itemProfile(String title,String subtitle,IconData iconData){
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(5),
-          boxShadow:[
-            BoxShadow(
-                offset: Offset(0,5),
-                color: Colors.brown.withOpacity(1),
-                spreadRadius: 4,
-                blurRadius: 10
-            )
-          ]
-      ),
-      child: ListTile(
-        title: Text(title),
-        subtitle:  Text(subtitle),
-        leading: Icon(iconData),
-        trailing: Icon(Icons.edit,color: Colors.black45),
-        tileColor: Colors.white,
-      ),
+        body: StreamBuilder<DocumentSnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection("users")
+              .doc(currentUser.email)
+              .snapshots(),
+          builder: (context, snapshot) {
+            //get user data
+            if (snapshot.hasData) {
+              final userData = snapshot.data!.data() as Map<String, dynamic>;
+
+              return ListView(
+                children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  //profile pic
+                  CircleAvatar(
+                    radius: 72,
+                    backgroundColor: Colors.brown,
+                    child: Text(
+                      userData['Name'] != null && userData['Name'].isNotEmpty
+                          ? userData['Name'][0].toUpperCase()
+                          : '',
+                      style: TextStyle(
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //user email
+                  Text(
+                    currentUser.email!,
+                    textAlign: TextAlign.center,
+                  ),
+
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  //user details
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25.0),
+                    child: Text(
+                      'My Details',
+                      // style: TextStyle(color: Colors.brown[400]),
+                    ),
+                  ),
+                  //User Name
+                  MyTextBox(
+                    text: userData['Name'],
+                    sectionName: 'N A M E',
+                    onPressed: () => editfield('Name'),
+                  ),
+
+                  //Hostel Name
+                  MyTextBox(
+                    text: userData['Hostel'],
+                    sectionName: 'H O S T E L',
+                    onPressed: () => editfield('Hostel'),
+                  ),
+
+                  //Room No
+                  MyTextBox(
+                    text: userData['Room'],
+                    sectionName: 'R O O M-N O',
+                    onPressed: () => editfield('Room'),
+                  ),
+                ],
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error${snapshot.error}'),
+              );
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        )
     );
   }
 }
-
-
