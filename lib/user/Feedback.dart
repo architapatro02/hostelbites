@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hostelbites/components/mybutton.dart';
@@ -137,7 +139,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           final String userName = userSnapshot['Name'] ?? ''; // Provide a default value if the field is missing
           final String userRoomNo = userSnapshot['Room'] ?? ''; // Provide a default value if the field is missing
 
-          // Store feedback in Firestore
+          // Store feedback in Firestore with a timestamp
           await FirebaseFirestore.instance.collection('feedback').add({
             'type': _selectedType,
             'feedback': _textController.text,
@@ -178,5 +180,41 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     }
   }
 
+  // Function to periodically delete old feedback entries
+  void _scheduleFeedbackCleanup() {
+    // Use a periodic timer to run a cleanup task every 24 hours
+    const cleanupInterval = Duration(hours: 24);
+    Timer.periodic(cleanupInterval, (Timer timer) {
+      _deleteOldFeedbackEntries();
+    });
+  }
 
+  // Function to delete feedback entries older than 24 hours
+  Future<void> _deleteOldFeedbackEntries() async {
+    try {
+      final DateTime now = DateTime.now();
+      final DateTime cutoffTime = now.subtract(Duration(hours: 24));
+
+      QuerySnapshot oldFeedbackSnapshot = await FirebaseFirestore.instance
+          .collection('feedback')
+          .where('timestamp', isLessThan: Timestamp.fromDate(cutoffTime))
+          .get();
+
+      if (oldFeedbackSnapshot.docs.isNotEmpty) {
+        // Delete each old feedback entry
+        for (DocumentSnapshot feedbackDoc in oldFeedbackSnapshot.docs) {
+          await feedbackDoc.reference.delete();
+        }
+      }
+    } catch (e) {
+      print('Error deleting old feedback entries: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Schedule the feedback cleanup task when the widget is first created
+    _scheduleFeedbackCleanup();
+  }
 }

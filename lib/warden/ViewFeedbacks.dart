@@ -18,95 +18,98 @@ class _ShowFeedbackPageState extends State<ShowFeedbackPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              color: Colors.brown[300],
-              // width: screenWidth * 0.9,
-              child: Card(
-                elevation: 5,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: FutureBuilder<QuerySnapshot>(
-                    future:
-                        FirebaseFirestore.instance.collection('feedback').get(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      }
+        child: Card(
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: FutureBuilder<QuerySnapshot>(
+            future: FirebaseFirestore.instance.collection('feedback').get(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
 
-                      if (snapshot.hasError) {
-                        return Center(child: Text('Error: ${snapshot.error}'));
-                      }
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              }
 
-                      List<DataRow> rows = [];
+              List<Widget> rows = [];
 
-                      snapshot.data!.docs.forEach((doc) {
-                        String type = doc['type'];
-                        String feedback = doc['feedback'];
-                        String userName = doc['user_name'];
-                        String room = doc['user_room_no'];
-                        // Timestamp timestamp = doc['timestamp'];
+              snapshot.data!.docs.forEach((doc) {
+                String type = doc['type'];
+                String feedback = doc['feedback'];
+                String userName = doc['user_name'];
+                String room = doc['user_room_no'];
 
-                        rows.add(DataRow(
-                          cells: [
-                            DataCell(Text(type)),
-                            DataCell(Text(feedback)),
-                            DataCell(Text(userName)),
-                            DataCell(Text(room)),
-                            // DataCell(Text(timestamp.toDate().toString())),
-                          ],
-                        ));
-                      });
+                rows.add(buildDataRow(type, feedback, userName, room));
+              });
 
-                      return DataTable(
-                        columnSpacing: 20.0,
-                        headingRowHeight: 40.0,
-                        dataRowHeight: 60.0,
-                        horizontalMargin: 10.0,
-                        columns: [
-                          DataColumn(
-                            label: Text(
-                              'Type',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              'Feedback',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              'Name',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              'Room No',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          // DataColumn(
-                          //   label: Text(
-                          //     'Timestamp',
-                          //     style: TextStyle(fontWeight: FontWeight.bold),
-                          //   ),
-                          // ),
-                        ],
-                        rows: rows,
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ),
-          ],
+              return ListView(
+                children: rows,
+              );
+            },
+          ),
         ),
       ),
+    );
+  }
+
+  Widget buildDataRow(String type, String feedback, String userName, String room) {
+    return Card(
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: DataTable(
+        columnSpacing: 20.0,
+        headingRowHeight: 40.0,
+        dataRowHeight: 60.0,
+        horizontalMargin: 10.0,
+        columns: [
+          DataColumn(
+            label: Text(
+              'Type',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          DataColumn(
+            label: Text(
+              'Feedback',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          DataColumn(
+            label: Text(
+              'Name',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          DataColumn(
+            label: Text(
+              'Room No',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+        rows: [
+          DataRow(
+            cells: [
+              DataCell(buildText(type)),
+              DataCell(buildText(feedback)),
+              DataCell(buildText(userName)),
+              DataCell(buildText(room)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildText(String text) {
+    return Text(
+      text,
+      style: TextStyle(color: Colors.black87),
     );
   }
 }

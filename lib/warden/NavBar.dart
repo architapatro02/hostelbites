@@ -5,6 +5,7 @@ import 'package:hostelbites/warden/ViewFeedbacks.dart';
  import 'package:hostelbites/warden/profile.dart';
 import 'package:hostelbites/warden/EditMenu.dart';
 import 'package:hostelbites/warden/NoticeWarden.dart';
+import 'package:hostelbites/warden/showAttendance.dart';
 
 class NavBar extends StatelessWidget {
   NavBar({super.key});
@@ -84,12 +85,12 @@ class NavBar extends StatelessWidget {
             leading: Icon(Icons.person, color: Colors.brown),
             title: Text('View Attendance'),
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => MilkDetailsPage(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ShowAttendance(),
+                ),
+              );
             },
           ),
           ListTile(

@@ -7,8 +7,17 @@ import 'package:hostelbites/user/milkpage.dart';
 import 'package:hostelbites/user/profile.dart';
 import 'package:hostelbites/user/viewmenu.dart';
 
-class NavBar extends StatelessWidget {
+class NavBar extends StatefulWidget {
   NavBar({super.key});
+
+  @override
+  State<NavBar> createState() => _NavBarState();
+}
+
+class _NavBarState extends State<NavBar> {
+  signout() async {
+    FirebaseAuth.instance.signOut().then((value) {});
+  }
 
   final user=FirebaseAuth.instance.currentUser!;
 
@@ -116,9 +125,7 @@ class NavBar extends StatelessWidget {
           ListTile(
             title: Text('Exit'),
             leading: Icon(Icons.exit_to_app, color: Colors.brown),
-            onTap: () {
-              Navigator.of(context).pop();
-            },
+            onTap: signout,
           ),
         ],
       ),
