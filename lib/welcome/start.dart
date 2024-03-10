@@ -34,33 +34,34 @@ class _MyStartState extends State<MyStart> {
                       style: GoogleFonts.roboto(fontSize: 30),
                     ),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        // Navigate to the student authentication page
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const AuthPage()));
+                          context,
+                          MaterialPageRoute(builder: (context) => AuthPage(userType: 'student')),
+                        );
                       },
                       child: Text('Student'),
                       style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.white70),
-                          foregroundColor:
-                              MaterialStateProperty.all(Colors.black)),
+                        backgroundColor: MaterialStateProperty.all(Colors.white70),
+                        foregroundColor: MaterialStateProperty.all(Colors.black),
+                      ),
                     ),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        // Navigate to the warden authentication page
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const AuthPageW()));
+                          context,
+                          MaterialPageRoute(builder: (context) => AuthPageW(userType: 'warden')),
+                        );
                       },
                       child: Text('Warden'),
                       style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.white70),
-                          foregroundColor:
-                              MaterialStateProperty.all(Colors.black)),
+                        backgroundColor: MaterialStateProperty.all(Colors.white70),
+                        foregroundColor: MaterialStateProperty.all(Colors.black),
+                      ),
                     )
+
                   ],
                 ),
               ),

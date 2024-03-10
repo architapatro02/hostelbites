@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hostelbites/auth/forgotpassword.dart';
-import '../auth/auth_service.dart';
 import '../components/mybutton.dart';
 import '../components/mytextfield.dart';
 
@@ -78,12 +77,12 @@ class _MyLoginWState extends State<MyLoginW> {
                   size: 100,
                 ),
                 //Welcome to Hostel Bites
-                Text('JIJI!!', style: GoogleFonts.montserrat(fontSize: 52)),
+                Text('Hostel Bites!!', style: GoogleFonts.montserrat(fontSize: 52)),
                 SizedBox(
                   height: 10,
                 ),
                 Text(
-                  'Let\'s see what we have got today!!',
+                  'Welcome Warden',
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(
@@ -146,45 +145,46 @@ class _MyLoginWState extends State<MyLoginW> {
                 ),
 
                 //or continue with
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.5,
-                          color: Colors.brown[250],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(
-                          "or continue with",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
-                      Expanded(
-                        child: Divider(
-                          thickness: 0.5,
-                          color: Colors.brown[250],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
 
-                SizedBox(
-                  height: 10,
-                ),
-
-                //google sign in
-                GestureDetector(
-                  onTap: AuthService().signInWithGoogle,
-                  child: Image.asset(
-                    'assets/images/googlelogo.jpg',
-                    height: 50,
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                //   child: Row(
+                //     children: [
+                //       Expanded(
+                //         child: Divider(
+                //           thickness: 0.5,
+                //           color: Colors.brown[250],
+                //         ),
+                //       ),
+                //       Padding(
+                //         padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                //         child: Text(
+                //           "or continue with",
+                //           style: TextStyle(color: Colors.black),
+                //         ),
+                //       ),
+                //       Expanded(
+                //         child: Divider(
+                //           thickness: 0.5,
+                //           color: Colors.brown[250],
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                //
+                // SizedBox(
+                //   height: 10,
+                // ),
+                //
+                // //google sign in
+                // GestureDetector(
+                //   onTap: AuthService().signInWithGoogle,
+                //   child: Image.asset(
+                //     'assets/images/googlelogo.jpg',
+                //     height: 50,
+                //   ),
+                // ),
                 SizedBox(
                   height: 15,
                 ),

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:hostelbites/warden/signupWarden.dart';
 import 'package:hostelbites/warden/loginWarden.dart';
 
-class LoginOrRegisterPage extends StatefulWidget {
-  const LoginOrRegisterPage({super.key});
+class LoginOrRegisterPageW extends StatefulWidget {
+  const LoginOrRegisterPageW({super.key});
 
   @override
-  State<LoginOrRegisterPage> createState() => _LoginOrRegisterPageState();
+  State<LoginOrRegisterPageW> createState() => _LoginOrRegisterPageWState();
 }
 
-class _LoginOrRegisterPageState extends State<LoginOrRegisterPage> {
+class _LoginOrRegisterPageWState extends State<LoginOrRegisterPageW> {
   //initially show login page
   bool showLoginPage = true;
 

@@ -21,7 +21,7 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.brown[300]!, Colors.white],
+            colors: [Colors.brown[400]!, Colors.white],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -50,8 +50,9 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
 
                   return Text(
                     'Total Students: $totalStudents',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
+                    style: GoogleFonts.actor(fontSize: 20, color: Colors.white54, fontWeight: FontWeight.bold),
+                    // style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.right,
                   );
                 },
               ),
@@ -94,7 +95,7 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
                           child: ListTile(
                             title: Text(
                               studentDetails,
-                              style: GoogleFonts.merriweather(fontSize: 18, color: Colors.black),
+                              style: GoogleFonts.albertSans(fontSize: 20, color: Colors.black),
                             ),
                             onTap: () {
                               // Show detailed student information with a fade-in animation
@@ -123,7 +124,7 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
           duration: Duration(milliseconds: 500),
           opacity: 1.0,
           child: AlertDialog(
-            title: Text('Student Details'),
+            title: Text('Student Details',style: GoogleFonts.actor(fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),),
             backgroundColor: Colors.brown[300], // Medium brown shade
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0),
@@ -132,11 +133,11 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Name: ${studentData['Name']}'),
-                  Text('ID: ${studentData['ID']}'),
-                  Text('Hostel: ${studentData['Hostel']}'),
-                  Text('Room: ${studentData['Room']}'),
-                  Text('Email: ${studentData['Email']}'),
+                  Text('Name: ${studentData['Name']}',style: GoogleFonts.acme(fontSize: 20, color: Colors.black),),
+                  Text('ID: ${studentData['ID']}',style: GoogleFonts.acme(fontSize: 20, color: Colors.black),),
+                  Text('Hostel: ${studentData['Hostel']}',style: GoogleFonts.acme(fontSize: 20, color: Colors.black),),
+                  Text('Room: ${studentData['Room']}',style: GoogleFonts.acme(fontSize: 20, color: Colors.black),),
+                  Text('Email: ${studentData['Email']}',style: GoogleFonts.acme(fontSize: 20, color: Colors.black),),
                 ],
               ),
             ),

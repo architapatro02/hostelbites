@@ -35,10 +35,6 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Lottie.asset('assets/animation/intro.json'),
-            // Icon(
-            //   Icons.food_bank_outlined,
-            //   size: 60,
-            // ),
             SizedBox(height: 20,),
             Text(
               'Hostel Bites',

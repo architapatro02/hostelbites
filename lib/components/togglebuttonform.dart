@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hostelbites/components/mybutton.dart';
 import 'package:intl/intl.dart';
 
 class ToggleButtonForm extends StatefulWidget {
@@ -21,27 +20,30 @@ class _ToggleButtonFormState extends State<ToggleButtonForm> {
   String _snackstatus3 = 'absent';
   String _dnrstatus4 = 'absent';
 
-  // Add a field to store the user's name
-  String _userName = '';
+  String _userName = ''; // Add a field for the user's name
+  String _userId = ''; // Add a field for the user's ID
+  DateTime? _lastAttendanceTime; // Add a field to store the last attendance time
 
   @override
   void initState() {
     super.initState();
-    // Fetch user's name from 'users' collection when the widget initializes
-    _fetchUserName();
+    // Fetch user's name, ID, and last attendance time from 'users' collection when the widget initializes
+    _fetchUserData();
   }
 
-  Future<void> _fetchUserName() async {
+  Future<void> _fetchUserData() async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final currentUser = FirebaseAuth.instance.currentUser!;
 
-
-
-    // Assuming you have a field called 'name' in the 'users' collection
-    DocumentSnapshot userSnapshot = await firestore.collection('users').doc(currentUser.email).get();
+    DocumentSnapshot userSnapshot =
+    await firestore.collection('users').doc(currentUser.email).get();
 
     setState(() {
       _userName = userSnapshot['Name'];
+      _userId = userSnapshot['ID'] ?? '';
+      _lastAttendanceTime = userSnapshot['lastAttendanceTime'] != null
+          ? (userSnapshot['lastAttendanceTime'] as Timestamp).toDate()
+          : null;
     });
   }
 
@@ -67,9 +69,7 @@ class _ToggleButtonFormState extends State<ToggleButtonForm> {
             ],
           ),
         ),
-
         SizedBox(height: 20),
-
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Row(
@@ -88,9 +88,7 @@ class _ToggleButtonFormState extends State<ToggleButtonForm> {
             ],
           ),
         ),
-
         SizedBox(height: 20),
-
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Row(
@@ -109,9 +107,7 @@ class _ToggleButtonFormState extends State<ToggleButtonForm> {
             ],
           ),
         ),
-
         SizedBox(height: 20),
-
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Row(
@@ -130,42 +126,64 @@ class _ToggleButtonFormState extends State<ToggleButtonForm> {
             ],
           ),
         ),
-
         SizedBox(height: 20),
-
-        // Repeat the same structure for lunch, snacks, and dinner
-
-        // Add a field for the user's name
+        Text('ID: $_userId', style: GoogleFonts.actor(fontSize: 20)),
         Text('Name: $_userName', style: GoogleFonts.actor(fontSize: 20)),
-
-        MyButton(
-          onTap: () {
-            _storeToggleButtonDataInFirebase();
-          },
-          text: 'Submit',
+        ElevatedButton(
+          onPressed: _isSubmitButtonDisabled() ? null : _storeToggleButtonDataInFirebase,
+          child: Text('Submit'),
         ),
       ],
     );
   }
 
   Future<void> _storeToggleButtonDataInFirebase() async {
-    // Get a reference to the Firestore database
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final currentUser = FirebaseAuth.instance.currentUser!;
 
     // Format the current date and time
     String formattedDate = DateFormat('dd/MM').format(DateTime.now());
     String formattedTime = DateFormat('HH:mm').format(DateTime.now());
 
-    // Store the data in the 'toggleButtonData' collection
-    await firestore.collection('attendance').add({
-      'Name': _userName, // Add the user's name
-      'Breakfast': _brkstatus1,
-      'Lunch': _lunchstatus2,
-      'Snacks': _snackstatus3,
-      'Dinner': _dnrstatus4,
-      'date': formattedDate,
-      'time': formattedTime,
+    // Check if a document with the same user ID already exists in 'attendance' collection
+    QuerySnapshot<Map<String, dynamic>> existingAttendance = await firestore
+        .collection('attendance')
+        .where('ID', isEqualTo: _userId)
+        .limit(1)
+        .get();
+
+    if (existingAttendance.docs.isNotEmpty) {
+      // Update the existing document
+      await firestore.collection('attendance').doc(_userId).update({
+        'Name': _userName,
+        'Breakfast': _brkstatus1,
+        'Lunch': _lunchstatus2,
+        'Snacks': _snackstatus3,
+        'Dinner': _dnrstatus4,
+        'date': formattedDate,
+        'time': formattedTime,
+      });
+    } else {
+      // Create a new document with user's ID as the document ID
+      await firestore.collection('attendance').doc(_userId).set({
+        'ID': _userId,
+        'Name': _userName,
+        'Breakfast': _brkstatus1,
+        'Lunch': _lunchstatus2,
+        'Snacks': _snackstatus3,
+        'Dinner': _dnrstatus4,
+        'date': formattedDate,
+        'time': formattedTime,
+      });
+    }
+
+    // Update the last attendance time in 'users' collection
+    await firestore.collection('users').doc(currentUser.email).update({
+      'lastAttendanceTime': FieldValue.serverTimestamp(),
     });
+
+    // Refresh the user data after updating the last attendance time
+    await _fetchUserData();
 
     // Show a success dialog
     showDialog(
@@ -185,5 +203,18 @@ class _ToggleButtonFormState extends State<ToggleButtonForm> {
         );
       },
     );
+  }
+
+  bool _isSubmitButtonDisabled() {
+    if (_lastAttendanceTime == null) {
+      // Enable the button if it's the first time marking attendance
+      return false;
+    }
+
+    // Calculate the time difference between now and the last attendance time
+    Duration timeDifference = DateTime.now().difference(_lastAttendanceTime!);
+
+    // Disable the button if less than 20 hours have passed since the last attendance
+    return timeDifference.inSeconds < 5;
   }
 }

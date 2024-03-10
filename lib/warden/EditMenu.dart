@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class EditMenu extends StatefulWidget {
   const EditMenu({Key? key}) : super(key: key);
@@ -74,21 +75,18 @@ class _EditMenuState extends State<EditMenu> {
             top: 20,
             child: Text(
               'Add Menu',
-              style: TextStyle(
-                fontSize: 40,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
+              style: GoogleFonts.actor(fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
           Positioned(
             bottom: 10,
             child: Text(
-              'What is in the MENU?!',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-              ),
+              'What\'s on the menu today!!',
+              style: GoogleFonts.actor(fontSize: 16,color: Colors.white),
+              // style: TextStyle(
+              //   fontSize: 16,
+              //   color: Colors.white,
+              // ),
             ),
           ),
         ],
