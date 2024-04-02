@@ -1,10 +1,11 @@
 // profile.dart
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:hostelbites/components/mytextbox.dart';
 import 'package:hostelbites/warden/commonBottomNavigation.dart';
-import 'package:hostelbites/warden/wardenhome.dart'; // Import the common bottom navigation bar
+import 'package:hostelbites/warden/wardenhome.dart';
+import 'package:hostelbites/warden/inventorypage.dart'; // Import the InventoryPage
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     FirebaseAuth.instance.signOut().then((value) {});
   }
 
-  Future<void> editfield(String field) async {
+  Future<void> editField(String field) async {
     String newValue = "";
     await showDialog(
       context: context,
@@ -119,23 +120,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   padding: const EdgeInsets.only(left: 25.0),
                   child: Text(
                     'My Details',
-                    // style: TextStyle(color: Colors.brown[400]),
                   ),
                 ),
                 MyTextBox(
                   text: userData['Name'],
                   sectionName: 'N A M E',
-                  onPressed: () => editfield('Name'),
+                  onPressed: () => editField('Name'),
                 ),
                 MyTextBox(
                   text: userData['Hostel'],
                   sectionName: 'H O S T E L',
-                  onPressed: () => editfield('Hostel'),
+                  onPressed: () => editField('Hostel'),
                 ),
                 MyTextBox(
                   text: userData['Phone'],
                   sectionName: 'P H O N E-N O',
-                  onPressed: () => editfield('phone'),
+                  onPressed: () => editField('phone'),
                 ),
               ],
             );
@@ -149,24 +149,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
         },
       ),
-      // bottomNavigationBar: CommonBottomNavigationBar(
-      //   onTabTapped: (index) {
-      //     setState(() {
-      //       _currentIndex = index;
-      //     });
-      //   },
-      //   currentIndex: _currentIndex,
-      // ),
       bottomNavigationBar: CommonBottomNavigationBar(
         onTabTapped: (index) {
           setState(() {
             _currentIndex = index;
           });
-          if (_currentIndex == 0) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => WardenHome()),
-            );
+          switch (_currentIndex) {
+            case 0:
+            // Handle Home page navigation
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => WardenHome()),
+              );
+              break;
+            case 1:
+            // Current page, no action needed
+            // Handle Inventory page navigation
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => InventoryPage()),
+              );
+              break;
+            case 2:
+
+              break;
+            default:
+              break;
           }
         },
         currentIndex: _currentIndex,
@@ -180,4 +188,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-

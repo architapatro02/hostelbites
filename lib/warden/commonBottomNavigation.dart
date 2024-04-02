@@ -32,17 +32,30 @@ class CommonBottomNavigationBar extends StatelessWidget {
         ),
         child: BottomNavigationBar(
           backgroundColor: Colors.white,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          selectedItemColor: Colors.grey.withOpacity(0.5),
-          unselectedItemColor: Colors.brown[200],
+          selectedItemColor: Colors.brown[900], // Highlighted color for activated page
+          unselectedItemColor: Colors.grey, // Dull color for other pages
           currentIndex: currentIndex,
-          onTap: onTabTapped,
+          onTap: (index) {
+            // Only update the currentIndex if the tapped index is not the current index
+            if (index != currentIndex) {
+              onTabTapped(index);
+            } else if (index == 2) {
+              // For Profile icon, directly call onTabTapped to highlight and navigate
+              onTabTapped(index);
+            }
+          },
           items: [
             BottomNavigationBarItem(
               label: "Home",
               icon: Icon(
                 Icons.home_rounded,
+                size: 30,
+              ),
+            ),
+            BottomNavigationBarItem(
+              label: "Inventory",
+              icon: Icon(
+                Icons.inventory,
                 size: 30,
               ),
             ),
@@ -59,4 +72,3 @@ class CommonBottomNavigationBar extends StatelessWidget {
     );
   }
 }
-

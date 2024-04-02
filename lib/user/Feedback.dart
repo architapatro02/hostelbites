@@ -38,20 +38,23 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       body: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.all(0.0),
+            padding: const EdgeInsets.all(16.0),
             child: Container(
-              height: 200,
-              color: Colors.brown[300],
+              height: 150,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.brown[300],
+              ),
               child: Center(
                 child: Text(
-                  'Feedback !!!',
-                  style: GoogleFonts.roboto(
-                    fontSize: 40,
-                  ),
+                  'Student Feedback !!',
+                  style: GoogleFonts.actor(fontSize: 35, color: Colors.white, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
+
               ),
             ),
+
           ),
           SizedBox(height: 20),
           Center(

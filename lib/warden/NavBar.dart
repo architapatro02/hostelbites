@@ -2,16 +2,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hostelbites/warden/ManageStudent.dart';
 import 'package:hostelbites/warden/ViewFeedbacks.dart';
- import 'package:hostelbites/warden/profile.dart';
+import 'package:hostelbites/warden/ViewMilkDetails.dart';
+import 'package:hostelbites/warden/profile.dart';
 import 'package:hostelbites/warden/EditMenu.dart';
 import 'package:hostelbites/warden/NoticeWarden.dart';
 import 'package:hostelbites/warden/showAttendance.dart';
 
 class NavBar extends StatelessWidget {
-  NavBar({super.key});
+  NavBar({Key? key});
 
-  final user=FirebaseAuth.instance.currentUser!;
-
+  final user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,8 @@ class NavBar extends StatelessWidget {
         children: [
           UserAccountsDrawerHeader(
             accountName: Text('Hello Jiji!!'),
-            accountEmail: Text(user.email!),
+            accountEmail: user != null ? Text(user?.email ?? '') : null,
+            // Check if user is not null before displaying the email address
             currentAccountPicture: InkWell(
               onTap: () {
                 Navigator.push(
@@ -45,6 +46,7 @@ class NavBar extends StatelessWidget {
               color: Colors.brown[300],
             ),
           ),
+
           ListTile(
             leading: Icon(Icons.manage_accounts, color: Colors.brown),
             title: Text('Manage Students'),
@@ -73,12 +75,10 @@ class NavBar extends StatelessWidget {
             leading: Icon(Icons.local_drink, color: Colors.brown),
             title: Text('Milk Details'),
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => MarkedAttendancePage(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ViewMilkDetails()),
+              );
             },
           ),
           ListTile(
@@ -117,6 +117,7 @@ class NavBar extends StatelessWidget {
               );
             },
           ),
+
           Divider(
             height: 10.0,
             color: Colors.black,
