@@ -1,6 +1,7 @@
 // wardenHome.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hostelbites/warden/InventoryPage.dart';
 import 'package:hostelbites/warden/NoteWarden.dart';
 import 'package:hostelbites/warden/commonBottomNavigation.dart';
 import 'package:hostelbites/warden/go_premium.dart';
@@ -17,8 +18,8 @@ class WardenHome extends StatefulWidget {
 class _WardenHomeState extends State<WardenHome> {
   int _currentIndex = 0;
 
-  signout() async {
-    FirebaseAuth.instance.signOut().then((value) {});
+  signOut() async {
+    await FirebaseAuth.instance.signOut();
   }
 
   @override
@@ -43,17 +44,33 @@ class _WardenHomeState extends State<WardenHome> {
           setState(() {
             _currentIndex = index;
           });
-          if (_currentIndex == 1) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => ProfileScreen()),
-            );
+          switch (_currentIndex) {
+            case 0:
+            // Home Page
+            // You can add navigation logic or replace the current page
+              break;
+            case 1:
+            // Profile Page
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => InventoryPage()),
+              );
+              break;
+            case 2:
+            // Inventory Page
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
+              );
+              break;
+            default:
+              break;
           }
         },
         currentIndex: _currentIndex,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: signout,
+        onPressed: signOut,
         tooltip: 'Log OUT',
         child: const Icon(Icons.exit_to_app_sharp),
         backgroundColor: Colors.brown,
