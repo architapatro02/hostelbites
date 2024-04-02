@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hostelbites/auth/auth_service.dart';
 import 'package:hostelbites/auth/forgotpassword.dart';
 import 'package:hostelbites/components/mybutton.dart';
 import 'package:flutter/material.dart';
@@ -145,47 +144,6 @@ class _MyLoginState extends State<MyLogin> {
                   height: 10,
                 ),
 
-                //or continue with
-
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                //   child: Row(
-                //     children: [
-                //       Expanded(
-                //         child: Divider(
-                //           thickness: 0.5,
-                //           color: Colors.brown[250],
-                //         ),
-                //       ),
-                //       Padding(
-                //         padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                //         child: Text(
-                //           "or continue with",
-                //           style: TextStyle(color: Colors.black),
-                //         ),
-                //       ),
-                //       Expanded(
-                //         child: Divider(
-                //           thickness: 0.5,
-                //           color: Colors.brown[250],
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                //
-                // SizedBox(
-                //   height: 10,
-                // ),
-                //
-                // //google sign in
-                // GestureDetector(
-                //   onTap: AuthService().signInWithGoogle,
-                //   child: Image.asset(
-                //     'assets/images/googlelogo.jpg',
-                //     height: 50,
-                //   ),
-                // ),
                 SizedBox(
                   height: 15,
                 ),

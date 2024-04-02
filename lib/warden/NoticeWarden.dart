@@ -49,40 +49,39 @@ class _SpecialNoteScreenState extends State<SpecialNoteScreen> {
           ),
           SizedBox(height: 20),
           Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextField(
-                  controller: _textController,
-                  decoration: InputDecoration(
-                    hintText: 'Important notice for students!',
-                    border: const OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        _textController.clear();
-                      },
-                      icon: const Icon(Icons.clear),
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextField(
+                    controller: _textController,
+                    decoration: InputDecoration(
+                      hintText: 'Important notice for students!',
+                      border: const OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          _textController.clear();
+                        },
+                        icon: const Icon(Icons.clear),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 25),
-                MaterialButton(
-                  onPressed: () {
-                    userPost = _textController.text;
-                    // Call function to add notice to Firestore
-                    addNoticeToFirestore(userPost);
-                  },
-                  color: Colors.brown,
-                  child: const Text('Post'),
-                ),
-                const SizedBox(height: 20),
-                // Section to show posted notice
-                _buildPostedNoticeSection(),
-              ],
-            ),
-          ),
+                  const SizedBox(height: 25),
+                  MaterialButton(
+                    onPressed: () {
+                      userPost = _textController.text;
+                      // Call function to add notice to Firestore
+                      addNoticeToFirestore(userPost);
+                    },
+                    color: Colors.brown,
+                    child: const Text('Post'),
+                  ),
+                  const SizedBox(height: 20),
+                  // Section to show posted notice
+                  _buildPostedNoticeSection(),
+                ],
+              ))
         ],
       ),
     );
@@ -91,15 +90,9 @@ class _SpecialNoteScreenState extends State<SpecialNoteScreen> {
   // Function to add notice to Firestore
   Future<void> addNoticeToFirestore(String notice) async {
     try {
-      // Get current date and time
-      DateTime now = DateTime.now();
-      String formattedDateTime = "${now.year}-${_addZeroIfNeeded(now.month)}-${_addZeroIfNeeded(now.day)} " +
-          "${_addZeroIfNeeded(now.hour)}:${_addZeroIfNeeded(now.minute)}";
-
-      // Store notice in Firestore
       await FirebaseFirestore.instance.collection('notice').add({
         'content': notice,
-        'timestamp': formattedDateTime,
+        'timestamp': FieldValue.serverTimestamp(), // Optional: You can add a timestamp for ordering
       });
 
       // Show a success dialog and clear text field
@@ -125,46 +118,20 @@ class _SpecialNoteScreenState extends State<SpecialNoteScreen> {
     }
   }
 
-  String _addZeroIfNeeded(int value) {
-    // Add a leading zero if the value is less than 10
-    return value < 10 ? '0$value' : value.toString();
-  }
-
-  // Function to delete notice from Firestore
-  Future<void> deleteNotice(String docId) async {
-    try {
-      await FirebaseFirestore.instance.collection('notice').doc(docId).delete();
-    } catch (e) {
-      print('Error deleting notice: $e');
-    }
-  }
-
+  // Widget to build the section displaying posted notice
   Widget _buildPostedNoticeSection() {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('notice').orderBy('timestamp', descending: true).snapshots(),
+      stream: FirebaseFirestore.instance.collection('notice').snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<Widget> notices = [];
           for (var doc in snapshot.data!.docs) {
             String content = doc['content'];
-            String timestamp = doc['timestamp'];
-
             notices.add(
               Card(
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
+                margin: EdgeInsets.symmetric(vertical: 5),
                 child: ListTile(
-                  title: Text(
-                    content,
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  subtitle: Text(
-                    timestamp,
-                    style: TextStyle(fontSize: 12),
-                  ),
+                  title: Text(content),
                   trailing: IconButton(
                     icon: Icon(Icons.delete),
                     onPressed: () {
@@ -186,5 +153,14 @@ class _SpecialNoteScreenState extends State<SpecialNoteScreen> {
         }
       },
     );
+  }
+
+  // Function to delete notice from Firestore
+  Future<void> deleteNotice(String docId) async {
+    try {
+      await FirebaseFirestore.instance.collection('notice').doc(docId).delete();
+    } catch (e) {
+      print('Error deleting notice: $e');
+    }
   }
 }

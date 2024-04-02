@@ -1,35 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hostelbites/warden/RequestPage.dart';
 
-class ManageStudentsPage extends StatefulWidget {
-  const ManageStudentsPage({Key? key}) : super(key: key);
+class RequestPage extends StatefulWidget {
+  const RequestPage({Key? key}) : super(key: key);
 
   @override
-  _ManageStudentsPageState createState() => _ManageStudentsPageState();
+  _RequestPageState createState() => _RequestPageState();
 }
 
-class _ManageStudentsPageState extends State<ManageStudentsPage> {
+class _RequestPageState extends State<RequestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Manage Students'),
+        title: Text('Pending Request'),
         centerTitle: true,
         backgroundColor: Colors.brown[700], // Darker brown shade
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => RequestPage()),
-              );
-            },
-            icon: Icon(Icons.pending_actions),
-            tooltip: 'Pending Requests',
-          ),
-        ],
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -45,7 +32,7 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance.collection('users').orderBy('Room').snapshots(),
+                stream: FirebaseFirestore.instance.collection('registration_requests').snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
@@ -56,13 +43,13 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
                   }
 
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return Center(child: Text('No students available.'));
+                    return Center(child: Text('No registration requests available.'));
                   }
 
-                  var totalStudents = snapshot.data!.docs.length;
+                  var totalRequests = snapshot.data!.docs.length;
 
                   return Text(
-                    'Total Students: $totalStudents',
+                    'Total Requests: $totalRequests',
                     style: GoogleFonts.actor(fontSize: 20, color: Colors.white54, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.right,
                   );
@@ -71,7 +58,7 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
             ),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance.collection('users').orderBy('Room').snapshots(),
+                stream: FirebaseFirestore.instance.collection('registration_requests').snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
@@ -82,15 +69,16 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
                   }
 
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return Center(child: Text('No students available.'));
+                    return Center(child: Text('No registration requests available.'));
                   }
 
                   return ListView.builder(
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
-                      var studentData = snapshot.data!.docs[index].data() as Map<String, dynamic>;
-                      var studentName = studentData['Name'] ?? '';
-                      var studentRoom = studentData['Room'] ?? '';
+                      var requestData = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                      var requestId = snapshot.data!.docs[index].id;
+                      var studentName = requestData['Name'] ?? '';
+                      var studentRoom = requestData['Room'] ?? '';
                       var studentDetails = '$studentName\n$studentRoom';
 
                       return AnimatedContainer(
@@ -110,7 +98,7 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
                             ),
                             onTap: () {
                               // Show detailed student information with a fade-in animation
-                              showStudentDetailsPopup(studentData);
+                              showRegistrationRequestPopup(requestData, requestId);
                             },
                           ),
                         ),
@@ -126,8 +114,8 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
     );
   }
 
-  // Function to show a popup screen with detailed student information
-  void showStudentDetailsPopup(Map<String, dynamic> studentData) {
+  // Function to show a popup screen with detailed registration request information
+  void showRegistrationRequestPopup(Map<String, dynamic> requestData, String requestId) {
     showDialog(
       context: context,
       builder: (context) {
@@ -135,7 +123,7 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
           duration: Duration(milliseconds: 500),
           opacity: 1.0,
           child: AlertDialog(
-            title: Text('Student Details',style: GoogleFonts.actor(fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),),
+            title: Text('Registration Request',style: GoogleFonts.actor(fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),),
             backgroundColor: Colors.brown[300], // Medium brown shade
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0),
@@ -144,28 +132,64 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Name: ${studentData['Name']}',style: GoogleFonts.acme(fontSize: 20, color: Colors.black),),
-                  Text('ID: ${studentData['ID']}',style: GoogleFonts.acme(fontSize: 20, color: Colors.black),),
-                  Text('Hostel: ${studentData['Hostel']}',style: GoogleFonts.acme(fontSize: 20, color: Colors.black),),
-                  Text('Room: ${studentData['Room']}',style: GoogleFonts.acme(fontSize: 20, color: Colors.black),),
-                  Text('Email: ${studentData['Email']}',style: GoogleFonts.acme(fontSize: 20, color: Colors.black),),
+                  Text('Name: ${requestData['Name']}',style: GoogleFonts.acme(fontSize: 20, color: Colors.black),),
+                  Text('ID: ${requestData['Student_ID']}',style: GoogleFonts.acme(fontSize: 20, color: Colors.black),),
+                  Text('Hostel: ${requestData['Hostel']}',style: GoogleFonts.acme(fontSize: 20, color: Colors.black),),
+                  Text('Room: ${requestData['Room']}',style: GoogleFonts.acme(fontSize: 20, color: Colors.black),),
+                  Text('Email: ${requestData['Email']}',style: GoogleFonts.acme(fontSize: 20, color: Colors.black),),
                 ],
               ),
             ),
             actions: [
               TextButton(
                 onPressed: () {
+                  acceptRequest(requestId, requestData);
                   Navigator.pop(context);
                 },
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.black, // Set the text color to black
                 ),
-                child: Text('Close'),
+                child: Text('Accept'),
+              ),
+              TextButton(
+                onPressed: () {
+                  declineRequest(requestId);
+                  Navigator.pop(context);
+                },
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.black, // Set the text color to black
+                ),
+                child: Text('Decline'),
               ),
             ],
           ),
         );
       },
     );
+  }
+
+  // Function to accept a registration request
+  void acceptRequest(String requestId, Map<String, dynamic> requestData) async {
+    try {
+      // Add student data to the users collection
+      await FirebaseFirestore.instance.collection('users').doc(requestData['Email']).set(requestData);
+
+      // Remove the request from the registration_requests collection
+      await FirebaseFirestore.instance.collection('registration_requests').doc(requestId).delete();
+    } catch (e) {
+      print('Error accepting request: $e');
+      // Handle error
+    }
+  }
+
+  // Function to decline a registration request
+  void declineRequest(String requestId) async {
+    try {
+      // Remove the request from the registration_requests collection
+      await FirebaseFirestore.instance.collection('registration_requests').doc(requestId).delete();
+    } catch (e) {
+      print('Error declining request: $e');
+      // Handle error
+    }
   }
 }
