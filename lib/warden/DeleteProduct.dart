@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DeleteProductPage extends StatefulWidget {
@@ -10,87 +11,160 @@ class DeleteProductPage extends StatefulWidget {
 
 class _DeleteProductPageState extends State<DeleteProductPage> {
   final _formKey = GlobalKey<FormState>();
-
   final _idController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown[100],
       appBar: AppBar(
-        centerTitle: true,
+        title: Text(
+          'Delete Product',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.brown[500],
-        foregroundColor: Colors.white,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.delete),
-            SizedBox(width: 2),
-            Text('Delete Product'), // Changed text to 'Add Product'
-          ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeader(),
+              SizedBox(height: 20),
+              TextFormField(
+                controller: _idController,
+                decoration: InputDecoration(
+                  labelText: 'Product ID',
+                  labelStyle: TextStyle(color: Colors.brown[500]),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.brown[500]!),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.brown[500]!),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                style: TextStyle(color: Colors.brown[500]),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter Product ID';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 20),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    _confirmDelete(context);
+                  },
+                  child: Text('Delete Product'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.brown[500],
+                    textStyle: TextStyle(color: Colors.white),
+                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 25.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-      body: ListView(
+    );
+  }
+
+  void _confirmDelete(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      String productId = _idController.text.toLowerCase();
+      FirebaseFirestore.instance.collection('inventory').doc(productId).get().then((docSnapshot) {
+        if (docSnapshot.exists) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Confirm Delete'),
+                content: Text('Are you sure you want to delete the product?'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      _deleteProduct(productId);
+                    },
+                    child: Text('Delete'),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                      textStyle: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Product ID does not exist')),
+          );
+        }
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter a Product ID')),
+      );
+    }
+  }
+
+  void _deleteProduct(String productId) {
+    FirebaseFirestore.instance.collection('inventory').doc(productId).delete().then((value) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Product deleted successfully')),
+      );
+      _idController.clear();
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to delete product: $error')),
+      );
+    });
+  }
+
+  Widget _buildHeader() {
+    return Container(
+      height: 150,
+      decoration: BoxDecoration(
+        color: Colors.brown[300],
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              height: 150,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.brown[300],
-              ),
-              child: Center(
-                child: Text(
-                  'Remove the Specified Product from the Inventory !!',
-                  style: GoogleFonts.actor(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-
-              ),
+          Positioned(
+            top: 50,
+            child: Text(
+              '"Delete Product"',
+              style: GoogleFonts.actor(fontSize: 35, color: Colors.white, fontWeight: FontWeight.bold),
             ),
-
           ),
-          _buildTextField('Enter the ID of the product you want to delete:', _idController),
-          SizedBox(height: 20),
-          // ElevatedButton(
-          //   onPressed: () {
-          //     // Add logic to save product
-          //   },
-          //   child: Text('Save Product'),
-          // ),
         ],
       ),
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-        style: GoogleFonts.actor(
-          fontSize: 20,
-          fontWeight: FontWeight.bold, // Change font weight if needed
-          color: Colors.black,),
-          ),
-          SizedBox(height: 8),
-          TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              fillColor: Colors.brown[300],
-              filled: true,
-              hintText: 'Product ID',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+  @override
+  void dispose() {
+    _idController.dispose();
+    super.dispose();
   }
 }

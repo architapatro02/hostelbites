@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ViewInventoryPage extends StatefulWidget {
@@ -9,12 +10,7 @@ class ViewInventoryPage extends StatefulWidget {
 }
 
 class _ViewInventoryPageState extends State<ViewInventoryPage> {
-  List<Product> products = [
-    Product(id: '1', name: 'Product A', quantity: 10, price: 100.0),
-    Product(id: '2', name: 'Product B', quantity: 15, price: 150.0),
-    Product(id: '3', name: 'Product C', quantity: 20, price: 200.0),
-  ];
-
+  List<Product> products = [];
   List<Product> filteredProducts = [];
 
   TextEditingController searchController = TextEditingController();
@@ -22,7 +18,7 @@ class _ViewInventoryPageState extends State<ViewInventoryPage> {
   @override
   void initState() {
     super.initState();
-    filteredProducts.addAll(products);
+    fetchProducts();
   }
 
   @override
@@ -74,7 +70,7 @@ class _ViewInventoryPageState extends State<ViewInventoryPage> {
                   child: TextField(
                     controller: searchController,
                     decoration: InputDecoration(
-                      labelText: 'Search by Product Name',
+                      labelText: 'Search by Product ID',
                       prefixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(),
                     ),
@@ -90,7 +86,6 @@ class _ViewInventoryPageState extends State<ViewInventoryPage> {
                   ),
                   child: Text('Search'),
                 ),
-
               ],
             ),
           ),
@@ -112,8 +107,8 @@ class _ViewInventoryPageState extends State<ViewInventoryPage> {
                   return DataRow(cells: [
                     DataCell(Text(product.id)),
                     DataCell(Text(product.name)),
-                    DataCell(Text(product.quantity.toString())),
-                    DataCell(Text('\$${product.price.toStringAsFixed(2)}')),
+                    DataCell(Text(product.quantity)),
+                    DataCell(Text(product.price)),
                   ]);
                 }).toList(),
                 dividerThickness: 2,
@@ -126,10 +121,18 @@ class _ViewInventoryPageState extends State<ViewInventoryPage> {
     );
   }
 
+  void fetchProducts() async {
+    final snapshot = await FirebaseFirestore.instance.collection('inventory').orderBy('productId').get();
+    setState(() {
+      products = snapshot.docs.map((doc) => Product.fromSnapshot(doc)).toList();
+      filteredProducts.addAll(products);
+    });
+  }
+
   void filterProducts() {
     String query = searchController.text.toLowerCase();
     setState(() {
-      filteredProducts = products.where((product) => product.name.toLowerCase().contains(query)).toList();
+      filteredProducts = products.where((product) => product.id.toLowerCase().contains(query)).toList();
     });
   }
 }
@@ -137,14 +140,17 @@ class _ViewInventoryPageState extends State<ViewInventoryPage> {
 class Product {
   final String id;
   final String name;
-  final int quantity;
-  final double price;
+  final String quantity;
+  final String price;
 
   Product({required this.id, required this.name, required this.quantity, required this.price});
-}
 
-void main() {
-  runApp(MaterialApp(
-    home: ViewInventoryPage(),
-  ));
+  factory Product.fromSnapshot(DocumentSnapshot snapshot) {
+    return Product(
+      id: snapshot['productId'] ?? '',
+      name: snapshot['productName'] ?? '',
+      quantity: snapshot['quantity'] ?? '',
+      price: snapshot['price'] ?? '',
+    );
+  }
 }

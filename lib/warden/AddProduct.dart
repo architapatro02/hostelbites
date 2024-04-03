@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AddProductPage extends StatefulWidget {
-  static const String routeName = '/add_prodAuct';
+  static const String routeName = '/add_product';
 
   @override
   _AddProductPageState createState() => _AddProductPageState();
@@ -15,98 +16,282 @@ class _AddProductPageState extends State<AddProductPage> {
   final _nameController = TextEditingController();
   final _quantityController = TextEditingController();
   final _priceController = TextEditingController();
-  bool isSubmitting = false;
 
-
+  String _selectedQuantityUnit = 'kg';
+  String _selectedPriceUnit = 'per kg';
+  List<String> _quantityUnits = ['kg', 'ltr', 'piece'];
+  List<String> _priceUnits = ['per kg', 'per ltr', 'per piece'];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown[100],
       appBar: AppBar(
-        centerTitle: true,
+        title: Text(
+          'Add Product',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.brown[500],
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.add_box_rounded),
-            SizedBox(width: 2),
-            Text('Add product'),
-          ],
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeader(),
+                SizedBox(height: 20), // Increased space
+                TextFormField(
+                  controller: _idController,
+                  decoration: InputDecoration(
+                    labelText: 'Product ID',
+                    labelStyle: TextStyle(color: Colors.brown[500]),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown[500]!),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown[500]!),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: TextStyle(color: Colors.brown[500]),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter Product ID';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16),
+                TextFormField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    labelText: 'Product Name',
+                    labelStyle: TextStyle(color: Colors.brown[500]),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown[500]!),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.brown[500]!),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: TextStyle(color: Colors.brown[500]),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter Product Name';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: _quantityController,
+                        decoration: InputDecoration(
+                          labelText: 'Quantity',
+                          labelStyle: TextStyle(color: Colors.brown[500]),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.brown[500]!),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.brown[500]!),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        style: TextStyle(color: Colors.brown[500]),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter Quantity';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    SizedBox(width: 16),
+                    DropdownButton<String>(
+                      value: _selectedQuantityUnit,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _selectedQuantityUnit = newValue!;
+                          _selectedPriceUnit = 'per $newValue';
+                        });
+                      },
+                      items: _quantityUnits.map<DropdownMenuItem<String>>((String unit) {
+                        return DropdownMenuItem<String>(
+                          value: unit,
+                          child: Text(unit, style: TextStyle(color: Colors.brown[500])),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: _priceController,
+                        decoration: InputDecoration(
+                          labelText: 'Price',
+                          labelStyle: TextStyle(color: Colors.brown[500]),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.brown[500]!),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.brown[500]!),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        style: TextStyle(color: Colors.brown[500]),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter Price';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    SizedBox(width: 16),
+                    Text(
+                      _selectedPriceUnit,
+                      style: TextStyle(color: Colors.brown[500]),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 40), // Increased space
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _checkProductId();
+                      }
+                    },
+                    child: Text('Add Product'),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.brown[500],
+                      textStyle: TextStyle(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 25.0),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              height: 150,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.brown[300],
-              ),
-              child: Center(
-                child: Text(
-                  'Add New Product to Your Inventory !!',
-                  style: GoogleFonts.actor(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-
-              ),
-            ),
-
-          ),
-          SizedBox(height: 30),
-          _buildTextField('PRODUCT ID', _idController),
-          _buildTextField('PRODUCT NAME', _nameController),
-          _buildTextField('QUANTITY', _quantityController),
-          _buildTextField('PRICE', _priceController),
-          SizedBox(height: 20),
-          SizedBox(height: 20),
-          // ElevatedButton(
-          //   onPressed: () {
-          //     // Add logic to save product
-          //   },
-          //   child: Text('Save Product'),
-          // ),
-        ],
-      ),
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildHeader() {
+    return Container(
+      height: 150,
+      decoration: BoxDecoration(
+        color: Colors.brown[300],
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          Text(
-            label,
-            style: GoogleFonts.actor(
-            fontSize: 20,
-            fontWeight: FontWeight.bold, // Change font weight if needed
-            color: Colors.black,
-          ),
-          ),
-          SizedBox(height: 8),
-          TextField(
-            controller: controller,
-            style: GoogleFonts.actor(
-              fontSize: 18, // Change font size if needed
-              color: Colors.black, // Change text color
-            ),
-            decoration: InputDecoration(
-              fillColor: Colors.brown[300],
-              filled: true,
-              hintText: 'Please enter ${label.toLowerCase()}',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
+          Positioned(
+            top: 50,
+            child: Text(
+              ' "Add Products" ',
+              style: GoogleFonts.actor(fontSize: 35, color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
         ],
       ),
     );
   }
+
+  void _checkProductId() {
+    String lowercaseProductId = _idController.text.toLowerCase();
+    FirebaseFirestore.instance.collection('productIds').doc(lowercaseProductId).get().then((docSnapshot) {
+      if (docSnapshot.exists) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Product ID already exists', style: TextStyle(color: Colors.white)),
+            backgroundColor: Colors.red, // Set snack bar background color here
+          ),
+        );
+      } else {
+        _addProduct(lowercaseProductId);
+      }
+    }).catchError((error) {
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to check product ID: $error', style: TextStyle(color: Colors.white)),
+          backgroundColor: Colors.red, // Set snack bar background color here
+        ),
+      );
+    });
+  }
+
+  void _addProduct(String lowercaseProductId) {
+    FirebaseFirestore.instance.collection('inventory').doc(lowercaseProductId).get().then((docSnapshot) {
+      if (docSnapshot.exists) {
+        // Product ID already exists, show error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Product ID already exists', style: TextStyle(color: Colors.white)),
+            backgroundColor: Colors.red, // Set snack bar background color here
+          ),
+        );
+      } else {
+        // Product ID does not exist, add the product
+        FirebaseFirestore.instance.collection('inventory').doc(lowercaseProductId).set({
+          'productId': _idController.text,
+          'productName': _nameController.text,
+          'quantity': '${_quantityController.text} $_selectedQuantityUnit',
+          'price': '${_priceController.text} $_selectedPriceUnit',
+        }).then((value) {
+          // Show success message
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Product added successfully', style: TextStyle(color: Colors.white)),
+              backgroundColor: Colors.green, // Set snack bar background color here
+            ),
+          );
+          // Clear form fields
+          _idController.clear();
+          _nameController.clear();
+          _quantityController.clear();
+          _priceController.clear();
+          setState(() {
+            _selectedQuantityUnit = 'kg';
+            _selectedPriceUnit = 'per kg';
+          });
+        }).catchError((error) {
+          // Show error message
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Failed to add product: $error', style: TextStyle(color: Colors.white)),
+              backgroundColor: Colors.red, // Set snack bar background color here
+            ),
+          );
+        });
+      }
+    }).catchError((error) {
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to check product ID: $error', style: TextStyle(color: Colors.white)),
+          backgroundColor: Colors.red, // Set snack bar background color here
+        ),
+      );
+    });
+  }
+
 }
-
