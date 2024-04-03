@@ -52,7 +52,7 @@ class _InventoryPageState extends State<InventoryPage> {
             ),
             child: Center(
               child: Text(
-                'Inventory Updates !!',
+                'Update Your Inventory !!',
                 style: GoogleFonts.actor(fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),

@@ -47,7 +47,7 @@ class _AddProductPageState extends State<AddProductPage> {
               ),
               child: Center(
                 child: Text(
-                  'Please add the new product to the inventory !!',
+                  'Add New Product to Your Inventory !!',
                   style: GoogleFonts.actor(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
