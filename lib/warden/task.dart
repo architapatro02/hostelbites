@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hostelbites/user/NoteStudent.dart';
@@ -14,7 +16,14 @@ class Task {
   Widget? page; // Change this to Widget type
   bool islast;
 
-  Task({this.iconData, this.title, this.bgcolor, this.iconColor, this.page, this.islast = false}); // Add 'page' parameter
+  Task({
+    this.iconData,
+    this.title,
+    this.bgcolor,
+    this.iconColor,
+    this.page,
+    this.islast = false
+  }); // Add 'page' parameter
 
   static List<Task> generateTasks() {
     return [
@@ -24,6 +33,8 @@ class Task {
         bgcolor: Colors.brown[200],
         iconColor: Colors.brown[900],
         page: ManageStudentsPage(),
+        //backgroundImage: 'assets/images/r1.jpg',
+
       ),
       Task(
         iconData: Icons.edit,
