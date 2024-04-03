@@ -25,7 +25,7 @@ class _WardenHomeState extends State<WardenHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.brown[800],
       appBar: _buildAppBar(context),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,21 +80,21 @@ class _WardenHomeState extends State<WardenHome> {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.brown[200],
       elevation: 0,
       title: Row(
         children: [
-          Container(
-            height: 45,
-            width: 45,
-            child: CircleAvatar(
-              backgroundImage: AssetImage('assets/images/dp.jpg'),
-              radius: 30,
-            ),
-          ),
+          // Container(
+          //   height: 45,
+          //   width: 45,
+          //   child: CircleAvatar(
+          //     backgroundImage: AssetImage('assets/images/dp.jpg'),
+          //     radius: 30,
+          //   ),
+          // ),
           SizedBox(width: 10),
           Text(
-            'Welcome Jiji',
+            ' " Welcome Jiji " ',
             style: TextStyle(
               color: Colors.brown[900],
               fontSize: 26,
@@ -118,5 +118,6 @@ class _WardenHomeState extends State<WardenHome> {
         ),
       ],
     );
+
   }
 }

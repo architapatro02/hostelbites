@@ -14,10 +14,17 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.brown[800],
       appBar: AppBar(
-        title: Text('Manage Students'),
+        title: Text('Manage Students',
+          style: TextStyle(
+            color: Colors.brown[900],
+            fontSize: 23,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.brown[700], // Darker brown shade
+        backgroundColor: Colors.brown[200], // Darker brown shade
         actions: [
           IconButton(
             onPressed: () {
@@ -27,18 +34,19 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
               );
             },
             icon: Icon(Icons.pending_actions),
+            color: Colors.brown[900],
             tooltip: 'Pending Requests',
           ),
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.brown[400]!, Colors.white],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+        // decoration: BoxDecoration(
+        //   gradient: LinearGradient(
+        //     colors: [Colors.brown[800]!, Colors.white],
+        //     begin: Alignment.topCenter,
+        //     end: Alignment.bottomCenter,
+        //   ),
+        // ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -63,7 +71,7 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
 
                   return Text(
                     'Total Students: $totalStudents',
-                    style: GoogleFonts.actor(fontSize: 20, color: Colors.white54, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.actor(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.right,
                   );
                 },

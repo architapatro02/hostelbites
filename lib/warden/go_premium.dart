@@ -9,9 +9,9 @@ class GoPremium extends StatelessWidget {
         children: [
           Container(
               margin: EdgeInsets.all(5),
-              padding: EdgeInsets.all(25),
+              padding: EdgeInsets.all(40),
               decoration: BoxDecoration(
-                  color: Colors.brown[400],
+                  color: Colors.brown[700],
                   borderRadius: BorderRadius.circular(20)),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,15 +34,15 @@ class GoPremium extends StatelessWidget {
                           'HOSTEL BITES',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 18,
+                              fontSize: 30,
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 10),
                         Text(
-                          'Letss Manage Our Hostel',
+                          ' "Letss Manage Our Hostel" ',
                           style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 16,
+                            color: Colors.white,
+                            fontSize: 18,
                           ),
                         )
                       ])

@@ -14,8 +14,10 @@ class Task {
   String? title;
   Color? bgcolor;
   Color? iconColor;
-  Widget? page; // Change this to Widget type
+  Widget? page;
+  String? backgroundImage;// Change this to Widget type
   bool islast;
+
 
   Task({
     this.iconData,
@@ -23,6 +25,7 @@ class Task {
     this.bgcolor,
     this.iconColor,
     this.page,
+    this.backgroundImage,
     this.islast = false
   }); // Add 'page' parameter
 
@@ -34,7 +37,7 @@ class Task {
         bgcolor: Colors.brown[200],
         iconColor: Colors.brown[900],
         page: ManageStudentsPage(),
-        //backgroundImage: 'assets/images/r1.jpg',
+        backgroundImage: 'assets/images/manage.jpg',
 
       ),
       Task(
@@ -43,13 +46,15 @@ class Task {
         bgcolor: Colors.brown[200],
         iconColor: Colors.brown[900],
         page: EditMenu(),
+        backgroundImage: 'assets/images/menu.jpeg',
       ),
       Task(
         iconData: Icons.local_drink,
         title: 'Milk Details',
         bgcolor: Colors.brown[200],
         iconColor: Colors.brown[900],
-        page: ViewMilkDetails(), // Set appropriate widget for Milk Details page
+        page: ViewMilkDetails(),
+        backgroundImage: 'assets/images/milkk.jpg',// Set appropriate widget for Milk Details page
       ),
       Task(
         iconData: Icons.line_style_rounded,
@@ -57,6 +62,7 @@ class Task {
         bgcolor: Colors.brown[200],
         iconColor: Colors.brown[900],
         page: ShowAttendance(),
+        backgroundImage: 'assets/images/attendance.jpg',
       ),
       Task(
         iconData: Icons.note_alt_rounded,
@@ -64,6 +70,7 @@ class Task {
         bgcolor: Colors.brown[200],
         iconColor: Colors.brown[900],
         page: SpecialNoteScreen(),
+        backgroundImage: 'assets/images/notice.jpg',
       ),
       Task(
         iconData: Icons.feedback_rounded,
@@ -71,6 +78,7 @@ class Task {
         bgcolor: Colors.brown[200],
         iconColor: Colors.brown[900],
         page: ShowFeedbackPage(),
+        backgroundImage: 'assets/images/feedbackk.jpg',
       ),
     ];
   }
