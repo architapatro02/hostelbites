@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class EditMenu extends StatefulWidget {
   const EditMenu({Key? key}) : super(key: key);
@@ -28,10 +28,10 @@ class _EditMenuState extends State<EditMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown[100],
+      backgroundColor: Colors.brown[800],
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.brown,
+        backgroundColor: Colors.brown[300],
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -63,34 +63,27 @@ class _EditMenuState extends State<EditMenu> {
 
   Widget _buildHeader() {
     return Container(
-      height: 150,
+      height: 180,
       decoration: BoxDecoration(
-        color: Colors.brown[300],
-        borderRadius: BorderRadius.circular(20),
+        color: Colors.brown[900],
+        borderRadius: BorderRadius.circular(15),
+        image: DecorationImage(
+          image: AssetImage('assets/images/edit.jpg'), // Replace 'assets/background_image.jpg' with your image asset path
+          fit: BoxFit.cover,
+        ),
       ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Positioned(
-            top: 50,
-            child: Text(
-              ' "Let\'s Update Menu" ',
-              style: GoogleFonts.actor(fontSize: 35, color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-          ),
-          // Positioned(
-          //   bottom: 10,
-          //   child: Text(
-          //     '!! Letss Update the Menu !!',
-          //     style: GoogleFonts.actor(fontSize: 16,color: Colors.white),
-          //     // style: TextStyle(
-          //     //   fontSize: 16,
-          //     //   color: Colors.white,
-          //     // ),
-          //   ),
-          // ),
-        ],
-      ),
+      // child: Stack(
+      //   alignment: Alignment.center,
+      //   children: [
+      //     Positioned(
+      //       top: 0,
+      //       child: Text(
+      //         ' "Let\'s Update" ',
+      //         style: GoogleFonts.actor(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+      //       ),
+      //     ),
+      //   ],
+      // ),
     );
   }
 
@@ -102,13 +95,13 @@ class _EditMenuState extends State<EditMenu> {
         children: [
           Text(
             label,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
           ),
           SizedBox(height: 8),
           TextField(
             controller: controller,
             decoration: InputDecoration(
-              fillColor: Colors.white,
+              fillColor: Colors.brown[200],
               filled: true,
               hintText: label,
               border: OutlineInputBorder(

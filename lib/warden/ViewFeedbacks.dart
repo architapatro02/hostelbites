@@ -10,11 +10,11 @@ class _ShowFeedbackPageState extends State<ShowFeedbackPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown[200],
+      backgroundColor: Colors.brown[800],
       appBar: AppBar(
         title: Text('Feedback Details'),
         centerTitle: true,
-        backgroundColor: Colors.brown[500],
+        backgroundColor: Colors.brown[300],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),

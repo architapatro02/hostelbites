@@ -31,9 +31,9 @@ class CommonBottomNavigationBar extends StatelessWidget {
           topRight: Radius.circular(30),
         ),
         child: BottomNavigationBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.brown[300],
           selectedItemColor: Colors.brown[900], // Highlighted color for activated page
-          unselectedItemColor: Colors.grey, // Dull color for other pages
+          unselectedItemColor: Colors.brown[300], // Dull color for other pages
           currentIndex: currentIndex,
           onTap: (index) {
             // Only update the currentIndex if the tapped index is not the current index

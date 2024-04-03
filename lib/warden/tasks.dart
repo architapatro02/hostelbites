@@ -7,17 +7,24 @@ class Tasks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(15),
-      child: GridView.builder(
-          itemCount: tasksList.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10
-          ), itemBuilder: (BuildContext context, int index) =>
-      tasksList[index].islast ?   _builderAddTask() : _builderTask(context, tasksList[index])),
+        padding: EdgeInsets.all(15),
+        child: ListView.builder(
+            itemCount: tasksList.length,
+            itemBuilder: (BuildContext context, int index) {
+              final task = tasksList[index];
+              return Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child:SizedBox(
+                    height: 150,
+                  child: tasksList[index].islast
+                      ? _builderAddTask()
+                      : _builderTask(context, tasksList[index])),
+              );
+            }
+        ),
     );
   }
+
   Widget _builderAddTask() {
     return Text('Add Task');
   }
@@ -37,9 +44,16 @@ class Tasks extends StatelessWidget {
         decoration: BoxDecoration(
           color: task.bgcolor,
           borderRadius: BorderRadius.circular(20),
+          image: DecorationImage(
+            image: AssetImage(task.backgroundImage!
+          ), // Use backgroundImage here
+          fit: BoxFit.cover,
+          ),
         ),
-        child: Column(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center
+          ,
           children: [
             Icon(
               task.iconData,
@@ -52,6 +66,7 @@ class Tasks extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
+                color: Colors.brown[900],
               ),
             )
           ],

@@ -44,7 +44,7 @@ class _UserHomeState extends State<UserHome> {
         child: Stack(
           children: [
             Positioned(
-              top: 185,
+              top: 180,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
                 height: MediaQuery.of(context).size.height - 230,

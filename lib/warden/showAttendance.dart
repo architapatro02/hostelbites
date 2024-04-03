@@ -10,9 +10,14 @@ class _ShowAttendanceState extends State<ShowAttendance> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.brown[800],
       appBar: AppBar(
-        title: Text('Attendance Records'),
-        backgroundColor: Colors.brown,
+        title: Text('Attendance Records',
+        style: TextStyle(
+        color: Colors.brown[900],
+        ),
+        ),
+        backgroundColor: Colors.brown[300],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -65,10 +70,10 @@ class _ShowAttendanceState extends State<ShowAttendance> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Attendance summary section
-                Text(
-                  'Attendance',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
+                // Text(
+                //   'Attendance',
+                //   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                // ),
                 SizedBox(height: 16),
 
                 // Meal category blocks

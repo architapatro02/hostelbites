@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 
 class SpecialNoteScreen extends StatefulWidget {
@@ -17,10 +17,10 @@ class _SpecialNoteScreenState extends State<SpecialNoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown[100],
+      backgroundColor: Colors.brown[800],
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.brown[500],
+        backgroundColor: Colors.brown[300],
         foregroundColor: Colors.white,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -39,16 +39,21 @@ class _SpecialNoteScreenState extends State<SpecialNoteScreen> {
               height: 150,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
+                image: DecorationImage(
+                  image: AssetImage('assets/images/impp.jpg'), // Replace 'assets/background_image.jpg' with your image asset path
+                  fit: BoxFit.cover,
+                ),
                 color: Colors.brown[300],
               ),
-              child: Center(
-                child: Text(
-                  'IMPORTANT NOTICE FOR STUDENT!!',
-                  style: GoogleFonts.actor(fontSize: 23, color: Colors.white, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-
-              ),
+              // child: Center(
+              //   child: Text(
+              //     'IMPORTANT NOTICE FOR STUDENT!!',
+              //     style: GoogleFonts.actor(fontSize: 23, color: Colors.white, fontWeight: FontWeight.bold),
+              //     textAlign: TextAlign.center,
+              //
+              //   ),
+              //
+              // ),
             ),
 
           ),
@@ -63,6 +68,8 @@ class _SpecialNoteScreenState extends State<SpecialNoteScreen> {
                     controller: _textController,
                     decoration: InputDecoration(
                       hintText: 'Important notice for students!',
+                      fillColor: Colors.brown[200], // Set your desired background color here
+                      filled: true,
                       border: const OutlineInputBorder(),
                       suffixIcon: IconButton(
                         onPressed: () {
@@ -79,7 +86,7 @@ class _SpecialNoteScreenState extends State<SpecialNoteScreen> {
                       // Call function to add notice to Firestore
                       addNoticeToFirestore(userPost);
                     },
-                    color: Colors.brown,
+                    color: Colors.brown[200],
                     child: const Text('Post'),
                   ),
                   const SizedBox(height: 20),
