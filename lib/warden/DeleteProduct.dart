@@ -42,7 +42,7 @@ class _DeleteProductPageState extends State<DeleteProductPage> {
               ),
               child: Center(
                 child: Text(
-                  'Please remove the specified product from the inventory !!',
+                  'Remove the Specified Product from the Inventory !!',
                   style: GoogleFonts.actor(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),

@@ -43,7 +43,7 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
               ),
               child: Center(
                 child: Text(
-                  'Kindly update the product information accordingly !!',
+                  'Update the Product Information Accordingly !!',
                   style: GoogleFonts.actor(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),

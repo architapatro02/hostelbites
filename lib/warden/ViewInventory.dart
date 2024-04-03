@@ -54,7 +54,7 @@ class _ViewInventoryPageState extends State<ViewInventoryPage> {
               ),
               child: Center(
                 child: Text(
-                  'Please check the inventory for the latest updates !!',
+                  'Check Your Latest Updates !!',
                   style: GoogleFonts.actor(
                     fontSize: 23,
                     color: Colors.white,
@@ -86,11 +86,11 @@ class _ViewInventoryPageState extends State<ViewInventoryPage> {
                     filterProducts();
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.brown,
-                    onPrimary: Colors.white,
+                    foregroundColor: Colors.white, backgroundColor: Colors.brown,
                   ),
                   child: Text('Search'),
                 ),
+
               ],
             ),
           ),

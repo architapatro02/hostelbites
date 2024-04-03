@@ -72,23 +72,23 @@ class _EditMenuState extends State<EditMenu> {
         alignment: Alignment.center,
         children: [
           Positioned(
-            top: 20,
+            top: 50,
             child: Text(
-              'Add Menu',
-              style: GoogleFonts.actor(fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold),
+              ' "Let\'s Update Menu" ',
+              style: GoogleFonts.actor(fontSize: 35, color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
-          Positioned(
-            bottom: 10,
-            child: Text(
-              'What\'s on the menu today!!',
-              style: GoogleFonts.actor(fontSize: 16,color: Colors.white),
-              // style: TextStyle(
-              //   fontSize: 16,
-              //   color: Colors.white,
-              // ),
-            ),
-          ),
+          // Positioned(
+          //   bottom: 10,
+          //   child: Text(
+          //     '!! Letss Update the Menu !!',
+          //     style: GoogleFonts.actor(fontSize: 16,color: Colors.white),
+          //     // style: TextStyle(
+          //     //   fontSize: 16,
+          //     //   color: Colors.white,
+          //     // ),
+          //   ),
+          // ),
         ],
       ),
     );
