@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class SpecialNoteScreen extends StatefulWidget {
   const SpecialNoteScreen({Key? key}) : super(key: key);
@@ -32,20 +34,23 @@ class _SpecialNoteScreenState extends State<SpecialNoteScreen> {
       body: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.all(0.0),
+            padding: const EdgeInsets.all(16.0),
             child: Container(
-              height: 200,
-              color: Colors.brown[300],
+              height: 150,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.brown[300],
+              ),
               child: Center(
                 child: Text(
-                  'IMPORTANT NOTICE',
-                  style: TextStyle(
-                    fontSize: 35,
-                  ),
+                  'IMPORTANT NOTICE FOR STUDENT!!',
+                  style: GoogleFonts.actor(fontSize: 23, color: Colors.white, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
+
               ),
             ),
+
           ),
           SizedBox(height: 20),
           Padding(

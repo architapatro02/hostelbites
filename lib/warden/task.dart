@@ -2,10 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hostelbites/user/NoteStudent.dart';
+import 'package:hostelbites/warden/NoticeWarden.dart';
 import 'package:hostelbites/warden/EditMenu.dart';
 import 'package:hostelbites/warden/ManageStudent.dart';
 import 'package:hostelbites/warden/ViewFeedbacks.dart';
+import 'package:hostelbites/warden/ViewMilkDetails.dart';
 import 'package:hostelbites/warden/showAttendance.dart';
 
 class Task {
@@ -48,7 +49,7 @@ class Task {
         title: 'Milk Details',
         bgcolor: Colors.brown[200],
         iconColor: Colors.brown[900],
-        page: null, // Set appropriate widget for Milk Details page
+        page: ViewMilkDetails(), // Set appropriate widget for Milk Details page
       ),
       Task(
         iconData: Icons.line_style_rounded,
