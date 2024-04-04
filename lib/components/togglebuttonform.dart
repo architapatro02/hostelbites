@@ -206,15 +206,17 @@ class _ToggleButtonFormState extends State<ToggleButtonForm> {
   }
 
   bool _isSubmitButtonDisabled() {
-    if (_lastAttendanceTime == null) {
-      // Enable the button if it's the first time marking attendance
+    // Get the current time
+    final currentTime = DateTime.now().toLocal();
+
+    // Check if the current time is between 9 PM and 6 AM
+    if (currentTime.hour >= 13 || currentTime.hour < 14) {
+      // Enable the button if it's within the time frame
       return false;
     }
 
-    // Calculate the time difference between now and the last attendance time
-    Duration timeDifference = DateTime.now().difference(_lastAttendanceTime!);
-
-    // Disable the button if less than 20 hours have passed since the last attendance
-    return timeDifference.inSeconds < 5;
+    // Disable the button if it's outside the time frame
+    return true;
   }
+
 }

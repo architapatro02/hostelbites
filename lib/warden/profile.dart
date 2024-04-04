@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hostelbites/components/mytextbox.dart';
 import 'package:hostelbites/warden/commonBottomNavigation.dart';
 import 'package:hostelbites/warden/wardenhome.dart';
@@ -32,11 +33,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: Colors.brown[200],
         title: Text(
           "Edit $field",
-          style: TextStyle(color: Colors.white),
+          style: GoogleFonts.adamina(
+              // Example font from Google Fonts, you can replace it with any other font
+              fontSize: 20,
+              color: Colors.black // Adjust the font size as needed
+              ),
         ),
         content: TextField(
           autofocus: true,
-          style: TextStyle(color: Colors.white),
+          style: GoogleFonts.alata(
+            fontSize: 20, // Adjust the font size as needed
+          ),
           decoration: InputDecoration(
             hintText: "Enter new $field",
             hintStyle: TextStyle(color: Colors.white54),
@@ -49,14 +56,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
           TextButton(
             child: Text(
               'Cancel',
-              style: TextStyle(color: Colors.white),
+              style: GoogleFonts.alef(
+                  // Example font from Google Fonts, you can replace it with any other font
+                  fontSize: 15,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold // Adjust the font size as needed
+                  ),
             ),
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
             child: Text(
               'Save',
-              style: TextStyle(color: Colors.white),
+              style: GoogleFonts.alef(
+                // Example font from Google Fonts, you can replace it with any other font
+                  fontSize: 15,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold // Adjust the font size as needed
+              ),
             ),
             onPressed: () => Navigator.of(context).pop(newValue),
           ),
@@ -112,6 +129,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Text(
                   currentUser.email!,
                   textAlign: TextAlign.center,
+                  style: GoogleFonts.adamina(
+                    // Example font from Google Fonts, you can replace it with any other font
+                    fontSize: 15, // Adjust the font size as needed
+                  ),
                 ),
                 const SizedBox(
                   height: 30,
@@ -156,22 +177,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
           });
           switch (_currentIndex) {
             case 0:
-            // Handle Home page navigation
+              // Handle Home page navigation
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => WardenHome()),
               );
               break;
             case 1:
-            // Current page, no action needed
-            // Handle Inventory page navigation
+              // Current page, no action needed
+              // Handle Inventory page navigation
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => InventoryPage()),
               );
               break;
             case 2:
-
               break;
             default:
               break;

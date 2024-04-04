@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyTextBox extends StatelessWidget {
   final String text;
@@ -32,7 +33,11 @@ class MyTextBox extends StatelessWidget {
               //section name
               Text(
                 sectionName,
-                style: TextStyle(color: Colors.white60),
+                style: GoogleFonts.adamina(
+                    // Example font from Google Fonts, you can replace it with any other font
+                    fontSize: 15,
+                    color: Colors.white // Adjust the font size as needed
+                    ),
               ),
 
               //edit button
@@ -44,7 +49,13 @@ class MyTextBox extends StatelessWidget {
             ],
           ),
           //text
-          Text(text),
+          Text(
+            text,
+            style: GoogleFonts.alata(
+              // Example font from Google Fonts, you can replace it with any other font
+              fontSize: 15, // Adjust the font size as needed
+            ),
+          ),
         ],
       ),
     );

@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hostelbites/user/Attendance.dart';
 import 'package:hostelbites/user/Feedback.dart';
 import 'package:hostelbites/user/NoteStudent.dart';
 import 'package:hostelbites/user/milkpage.dart';
 import 'package:hostelbites/user/profile.dart';
-
 
 class NavBar extends StatefulWidget {
   NavBar({super.key});
@@ -19,7 +19,8 @@ class _NavBarState extends State<NavBar> {
     FirebaseAuth.instance.signOut().then((value) {});
   }
 
-  final user=FirebaseAuth.instance.currentUser!;
+  final user = FirebaseAuth.instance.currentUser!;
+  final usersCollection = FirebaseFirestore.instance.collection("users");
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +40,37 @@ class _NavBarState extends State<NavBar> {
                 );
               },
               child: CircleAvatar(
-                child: ClipOval(
-                  child: Image.asset(
-                    'assets/images/profile.png',
-                    fit: BoxFit.cover,
-                    width: 90,
-                    height: 90,
-                  ),
+                backgroundColor: Colors.brown[200],
+                child: StreamBuilder<DocumentSnapshot>
+                  (
+                  stream: FirebaseFirestore.instance
+                      .collection("users").doc(user.email).snapshots(),
+                  builder: (context, snapshot){
+                    //get user data
+                    if(snapshot.hasData){
+                      final userData = snapshot.data!.data() as Map<String, dynamic>;
+                      return Text(
+                        userData['Name'] != null && userData['Name'].isNotEmpty
+                            ? userData['Name'][0].toUpperCase()
+                            : '',
+                        style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      );
+                    }else{
+                      // Handle the case when data is not available
+                      return Text(
+                        '',
+                        style: TextStyle(
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      );
+                    }
+                  },
                 ),
               ),
             ),
