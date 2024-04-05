@@ -15,7 +15,7 @@ class _MarkedAttendancePageState extends State<MarkedAttendancePage> {
     final currentTime = DateTime.now().toLocal();
 
     // Check if the current time is between 9 PM and 6 AM
-    return currentTime.hour >= 13 || currentTime.hour < 14;
+    return currentTime.hour >= 21 || currentTime.hour < 6;
   }
 
   @override

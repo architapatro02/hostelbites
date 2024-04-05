@@ -133,7 +133,7 @@ class _ToggleButtonFormState extends State<ToggleButtonForm> {
           onPressed: _isSubmitButtonDisabled() ? null : _storeToggleButtonDataInFirebase,
           child: Text('Submit'),
           style: ElevatedButton.styleFrom(
-            primary: Colors.brown, // Change the button background color to brown
+            backgroundColor: Colors.brown, // Change the button background color to brown
           ),
         ),
 
@@ -214,7 +214,7 @@ class _ToggleButtonFormState extends State<ToggleButtonForm> {
     final currentTime = DateTime.now().toLocal();
 
     // Check if the current time is between 9 PM and 6 AM
-    if (currentTime.hour >= 13 || currentTime.hour < 14) {
+    if (currentTime.hour >= 21 || currentTime.hour < 6) {
       // Enable the button if it's within the time frame
       return false;
     }

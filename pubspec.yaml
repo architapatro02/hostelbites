@@ -46,6 +46,7 @@ dependencies:
   intl: ^0.17.0
   shared_preferences: 2.2.2
   badges: ^2.0.1
+  marquee: ^2.0.3
 
 
 dev_dependencies:
