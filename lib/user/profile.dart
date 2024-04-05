@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hostelbites/components/mytextbox.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -100,10 +101,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       userData['Name'] != null && userData['Name'].isNotEmpty
                           ? userData['Name'][0].toUpperCase()
                           : '',
-                      style: TextStyle(
-                        fontSize: 50,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                      style: GoogleFonts.adamina(
+                        // Example font from Google Fonts, you can replace it with any other font
+                          fontSize: 18,
+                          color: Colors.white // Adjust the font size as needed
                       ),
                     ),
                   ),
@@ -123,8 +124,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 25.0),
                     child: Text(
-                      'My Details',
-                      // style: TextStyle(color: Colors.brown[400]),
+                      'My Detailss',
+                      style: GoogleFonts.adamina(
+                          fontSize: 20,
+                          color: Colors.black // Adjust the font size as needed
+                      ),
                     ),
                   ),
                   //User Name

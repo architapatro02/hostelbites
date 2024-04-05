@@ -80,18 +80,11 @@ class _WardenHomeState extends State<WardenHome> {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
+      centerTitle: true,
       backgroundColor: Colors.brown[200],
       elevation: 0,
       title: Row(
         children: [
-          // Container(
-          //   height: 45,
-          //   width: 45,
-          //   child: CircleAvatar(
-          //     backgroundImage: AssetImage('assets/images/dp.jpg'),
-          //     radius: 30,
-          //   ),
-          // ),
           SizedBox(width: 10),
           Text(
             ' " Welcome Jiji " ',

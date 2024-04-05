@@ -103,7 +103,7 @@ class _InventoryPageState extends State<InventoryPage> {
           } else if (index == 2) {
             // Handle Profile page navigation
             // Navigate to the Profile page
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfileScreen()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ProfileScreen()));
           }
         },
         currentIndex: 1, // Set the current index to 1 for Inventory

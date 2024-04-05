@@ -132,7 +132,11 @@ class _ToggleButtonFormState extends State<ToggleButtonForm> {
         ElevatedButton(
           onPressed: _isSubmitButtonDisabled() ? null : _storeToggleButtonDataInFirebase,
           child: Text('Submit'),
+          style: ElevatedButton.styleFrom(
+            primary: Colors.brown, // Change the button background color to brown
+          ),
         ),
+
       ],
     );
   }

@@ -101,7 +101,6 @@ class _MyRegisterPageState extends State<MyRegisterPage> {
     return regex.hasMatch(value);
   }
 
-  // Sign up method
   void signUserUp() async {
     // Show loading circle
     showDialog(
@@ -130,7 +129,7 @@ class _MyRegisterPageState extends State<MyRegisterPage> {
       return;
     }
 
-    // Try creating the user
+    // Try sending the registration request
     try {
       await sendRegistrationRequest();
       Navigator.pop(context);
@@ -143,25 +142,30 @@ class _MyRegisterPageState extends State<MyRegisterPage> {
     }
   }
 
+  // Function to send registration request
   Future<void> sendRegistrationRequest() async {
-    String email = emailController.text;
-
+    // Create the registration request data
     Map<String, dynamic> requestData = {
       'Name': nameController.text,
       'Student_ID': studentIdController.text,
       'Hostel': hostelController.text,
       'Room': roomController.text,
-      'Email': email,
+      'Email': emailController.text,
+      'Password': passController.text,
     };
 
     try {
-      // Explicitly set the document ID to be the email
+      // Save the registration request data to Firestore
       await FirebaseFirestore.instance
           .collection('registration_requests')
-          .doc(email)
+          .doc(emailController.text)
           .set(requestData);
+
+      // Show success message to the user
+      showSuccessMessage("Registration request sent successfully");
     } catch (e) {
-      throw Exception("Failed to send registration request");
+      // Show error message to the user
+      showErrorMessage("Failed to send registration request");
     }
   }
 
@@ -183,68 +187,7 @@ class _MyRegisterPageState extends State<MyRegisterPage> {
     );
   }
 
-  // // Sign up method
-  // void signUserUp() async {
-  //   // Show loading circle
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) => const Center(
-  //       child: CircularProgressIndicator(),
-  //     ),
-  //   );
-  //
-  //   // Check if pass = confirm pass
-  //   if (passController.text != confirmPassController.text) {
-  //     Navigator.pop(context);
-  //     showErrorMessage("Passwords don't match");
-  //     return;
-  //   }
-  //
-  //   // Validate all fields
-  //   if (!_validateName(nameController.text) ||
-  //       !_validateStudentID(studentIdController.text) ||
-  //       !_validateHostelName(hostelController.text) ||
-  //       !_validateRoomNo(roomController.text) ||
-  //       !_validateEmail(emailController.text) ||
-  //       !_validatePassword(passController.text)) {
-  //     Navigator.pop(context);
-  //     showErrorMessage("Please enter valid data");
-  //     return;
-  //   }
-  //
-  //   // Try creating the user
-  //   try {
-  //     UserCredential userCredential =
-  //         await FirebaseAuth.instance.createUserWithEmailAndPassword(
-  //       email: emailController.text,
-  //       password: passController.text,
-  //     );
-  //
-  //     // After creating user, set specific document ID for the user in 'users' collection
-  //     String? userId = userCredential.user!.email; // Get the UID
-  //     DocumentReference userDocRef =
-  //         FirebaseFirestore.instance.collection("users").doc(userId);
-  //
-  //     // Check if the 'users' collection already has a document with the user ID
-  //     if (!(await userDocRef.get()).exists) {
-  //       // If not, create the document
-  //       await userDocRef.set({
-  //         'Name': nameController.text,
-  //         'ID': studentIdController.text,
-  //         'Hostel': hostelController.text,
-  //         'Room': roomController.text,
-  //         'Email': emailController.text,
-  //       });
-  //     }
-  //
-  //     if (context.mounted) Navigator.pop(context);
-  //   } on FirebaseAuthException catch (e) {
-  //     // Pop the loading circle
-  //     Navigator.pop(context);
-  //     // Show error message
-  //     showErrorMessage(e.code);
-  //   }
-  // }
+
 
   // Error message to user
   void showErrorMessage(String message) {

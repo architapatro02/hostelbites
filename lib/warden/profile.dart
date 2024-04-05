@@ -116,10 +116,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     userData['Name'] != null && userData['Name'].isNotEmpty
                         ? userData['Name'][0].toUpperCase()
                         : '',
-                    style: TextStyle(
-                      fontSize: 50,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                    style: GoogleFonts.actor(
+                      // Example font from Google Fonts, you can replace it with any other font
+                        fontSize: 50,
+                        color: Colors.white // Adjust the font size as needed
                     ),
                   ),
                 ),
@@ -129,9 +129,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Text(
                   currentUser.email!,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.adamina(
+                  style: GoogleFonts.albertSans(
                     // Example font from Google Fonts, you can replace it with any other font
-                    fontSize: 15, // Adjust the font size as needed
+                    fontSize: 16, // Adjust the font size as needed
                   ),
                 ),
                 const SizedBox(
@@ -141,6 +141,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   padding: const EdgeInsets.only(left: 25.0),
                   child: Text(
                     'My Details',
+                    style: GoogleFonts.alef(
+                        fontSize: 15,
+                        color: Colors.black // Adjust the font size as needed
+                    ),
                   ),
                 ),
                 MyTextBox(

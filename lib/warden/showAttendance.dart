@@ -69,11 +69,6 @@ class _ShowAttendanceState extends State<ShowAttendance> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Attendance summary section
-                // Text(
-                //   'Attendance',
-                //   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                // ),
                 SizedBox(height: 16),
 
                 // Meal category blocks

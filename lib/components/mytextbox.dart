@@ -33,9 +33,9 @@ class MyTextBox extends StatelessWidget {
               //section name
               Text(
                 sectionName,
-                style: GoogleFonts.adamina(
+                style: GoogleFonts.alef(
                     // Example font from Google Fonts, you can replace it with any other font
-                    fontSize: 15,
+                    fontSize: 18,
                     color: Colors.white // Adjust the font size as needed
                     ),
               ),
@@ -53,7 +53,7 @@ class MyTextBox extends StatelessWidget {
             text,
             style: GoogleFonts.alata(
               // Example font from Google Fonts, you can replace it with any other font
-              fontSize: 15, // Adjust the font size as needed
+              fontSize:17, // Adjust the font size as needed
             ),
           ),
         ],

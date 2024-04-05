@@ -3,8 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NotePage extends StatelessWidget {
-  int newItemsCount = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +14,7 @@ class NotePage extends StatelessWidget {
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('notes')
-            .orderBy('timestamp', descending: false)
+            .orderBy('timestamp', descending: true) // Order by timestamp in descending order
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -34,14 +32,55 @@ class NotePage extends StatelessWidget {
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
-              var noteData =
-                  snapshot.data!.docs[index].data() as Map<String, dynamic>;
+              var noteData = snapshot.data!.docs[index].data() as Map<String, dynamic>;
               var studentId = noteData['ID'] ?? '';
               var studentName = noteData['Name'] ?? '';
               var noteText = noteData['Note'] ?? '';
-              var noticeTime = noteData['timestamp'] ?? '';
+              var noticeTime = noteData['timestamp'];
 
-              return Card(
+              // Check if noticeTime is already a Timestamp
+              Timestamp timestamp;
+              if (noticeTime is Timestamp) {
+                timestamp = noticeTime;
+              } else {
+                // Handle if noticeTime is a string
+                var parts = noticeTime.split(' '); // Split the string by space
+                var timeParts = parts[0].split(':'); // Split the time part by colon
+                var day = int.parse(parts[1]); // Parse the day
+                var monthStr = parts[2]; // Extract the month string
+
+                // Map month string to month number
+                var monthMap = {
+                  'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6,
+                  'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
+                };
+
+                var month = monthMap[monthStr] ?? 1; // Get the month number or default to 1
+                var hour = int.parse(timeParts[0]); // Parse the hour
+                var minute = int.parse(timeParts[1]); // Parse the minute
+
+                // Create DateTime object
+                var postTime = DateTime(DateTime.now().year, month, day, hour, minute);
+                timestamp = Timestamp.fromDate(postTime);
+              }
+
+              // Calculate the expiration time (24 hours from the post time)
+              DateTime postTime = timestamp.toDate();
+              DateTime expirationTime = postTime.add(Duration(hours: 24));
+
+              // Check if the current time is past the expiration time
+              bool isExpired = DateTime.now().isAfter(expirationTime);
+
+              // Delete the feedback if it's expired
+              if (isExpired) {
+                FirebaseFirestore.instance
+                    .collection('notes')
+                    .doc(snapshot.data!.docs[index].id)
+                    .delete();
+              }
+
+              return !isExpired
+                  ? Card(
                 elevation: 3,
                 margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 shape: RoundedRectangleBorder(
@@ -49,7 +88,7 @@ class NotePage extends StatelessWidget {
                 ),
                 child: ListTile(
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   leading: CircleAvatar(
                     backgroundColor: Colors.brown[300],
                     child: Text(
@@ -64,8 +103,8 @@ class NotePage extends StatelessWidget {
                   title: Text(
                     '$studentName ($studentId)',
                     style: TextStyle(
-                      color: Colors.brown[900]
-                        ),
+                      color: Colors.brown[900],
+                    ),
                   ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +117,7 @@ class NotePage extends StatelessWidget {
                             color: Colors.black87),
                       ),
                       Text(
-                        'Posted on: $noticeTime',
+                        'Posted on: $postTime',
                         style: TextStyle(
                           color: Colors.grey, // Change the color here
                         ),
@@ -86,7 +125,8 @@ class NotePage extends StatelessWidget {
                     ],
                   ),
                 ),
-              );
+              )
+                  : SizedBox(); // Return an empty SizedBox if the feedback is expired
             },
           );
         },
