@@ -21,7 +21,8 @@ class _ToggleButtonFormState extends State<ToggleButtonForm> {
   String _dnrstatus4 = 'absent';
 
   String _userName = ''; // Add a field for the user's name
-  String _userId = ''; // Add a field for the user's ID
+  String _userId = '';
+  String _userRoom = ''; // Add a field for the user's ID
   DateTime? _lastAttendanceTime; // Add a field to store the last attendance time
 
   @override
@@ -41,10 +42,39 @@ class _ToggleButtonFormState extends State<ToggleButtonForm> {
     setState(() {
       _userName = userSnapshot['Name'];
       _userId = userSnapshot['ID'] ?? '';
+      _userRoom = userSnapshot['Room'] ?? '';
       _lastAttendanceTime = userSnapshot['lastAttendanceTime'] != null
           ? (userSnapshot['lastAttendanceTime'] as Timestamp).toDate()
           : null;
     });
+  }
+
+  bool _isSubmitButtonDisabled() {
+    // Get the current time
+    final currentTime = DateTime.now().toLocal();
+
+    // Check if the current time is between 9 PM and 6 AM
+    if (currentTime.hour >= 21 || currentTime.hour < 6) {
+      // Enable the button if it's within the time frame
+      return false;
+    }
+
+    // Disable the button if it's outside the time frame
+    return true;
+  }
+
+  String _getSubmitButtonMessage() {
+    // Get the current time
+    final currentTime = DateTime.now().toLocal();
+
+    // Check if the current time is between 9 PM and 6 AM
+    if (currentTime.hour >= 21 || currentTime.hour < 6) {
+      // Return an empty message if the button is enabled
+      return '';
+    }
+
+    // Return the message if the button is disabled
+    return 'Attendance should be filled between 9 PM to 6 AM';
   }
 
   @override
@@ -136,7 +166,13 @@ class _ToggleButtonFormState extends State<ToggleButtonForm> {
             backgroundColor: Colors.brown, // Change the button background color to brown
           ),
         ),
-
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 25.0),
+          child: Text(
+            _getSubmitButtonMessage(),
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
       ],
     );
   }
@@ -160,6 +196,7 @@ class _ToggleButtonFormState extends State<ToggleButtonForm> {
       // Update the existing document
       await firestore.collection('attendance').doc(_userId).update({
         'Name': _userName,
+        'Room': _userRoom,
         'Breakfast': _brkstatus1,
         'Lunch': _lunchstatus2,
         'Snacks': _snackstatus3,
@@ -172,6 +209,7 @@ class _ToggleButtonFormState extends State<ToggleButtonForm> {
       await firestore.collection('attendance').doc(_userId).set({
         'ID': _userId,
         'Name': _userName,
+        'Room': _userRoom,
         'Breakfast': _brkstatus1,
         'Lunch': _lunchstatus2,
         'Snacks': _snackstatus3,
@@ -208,19 +246,5 @@ class _ToggleButtonFormState extends State<ToggleButtonForm> {
       },
     );
   }
-
-  bool _isSubmitButtonDisabled() {
-    // Get the current time
-    final currentTime = DateTime.now().toLocal();
-
-    // Check if the current time is between 9 PM and 6 AM
-    if (currentTime.hour >= 21 || currentTime.hour < 6) {
-      // Enable the button if it's within the time frame
-      return false;
-    }
-
-    // Disable the button if it's outside the time frame
-    return true;
-  }
-
 }
+
