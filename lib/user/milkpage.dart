@@ -16,6 +16,7 @@ class _MilkDetailsPageState extends State<MilkDetailsPage> {
   String _selectedMonth = DateFormat('MMMM').format(DateTime.now()); // Default month
   String _userId = '';
   String _userName = '';
+  String _userRoom = '';
 
   @override
   void initState() {
@@ -34,27 +35,40 @@ class _MilkDetailsPageState extends State<MilkDetailsPage> {
     setState(() {
       _userName = userSnapshot['Name'];
       _userId = userSnapshot['ID'] ?? '';
+      _userRoom = userSnapshot['Room'] ?? '';
       _subscribed = false;
     });
   }
 
   void _checkButtonAvailability() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int lastInteractionTimestamp = prefs.getInt('lastInteractionTimestamp') ?? 0;
-
     DateTime now = DateTime.now();
-    DateTime lastInteractionDate =
-    DateTime.fromMillisecondsSinceEpoch(lastInteractionTimestamp);
-    DateTime nextInteractionDate =
-    lastInteractionDate.add(Duration(days: 28));
+    if (now.day >= 6 && now.day <= 7) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      bool userChoiceMade = prefs.getBool('userChoiceMade') ?? false;
 
-    if (now.isAfter(nextInteractionDate)) {
-      setState(() {
-        _buttonsEnabled = true;
-      });
+      if (!userChoiceMade) {
+        setState(() {
+          _buttonsEnabled = true;
+        });
+      } else {
+        setState(() {
+          _buttonsEnabled = false;
+        });
+      }
     } else {
       setState(() {
         _buttonsEnabled = false;
+      });
+    }
+
+    // Check if the user has a document in the "milk" collection
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final milkCollection = firestore.collection('milk');
+
+    DocumentSnapshot milkSnapshot = await milkCollection.doc(_userId).get();
+    if (milkSnapshot.exists) {
+      setState(() {
+        _subscribed = milkSnapshot['subscribed'] ?? false;
       });
     }
   }
@@ -64,13 +78,29 @@ class _MilkDetailsPageState extends State<MilkDetailsPage> {
     final CollectionReference milkCollection = firestore.collection('milk');
 
     try {
-      await milkCollection.doc(_userId).set({
-        'userName': _userName,
-        'userId': _userId,
-        'selectedMonth': _selectedMonth,
-        'subscribed': subscribe,
-        'timestamp': FieldValue.serverTimestamp(),
-      });
+      if (subscribe) {
+        await milkCollection.doc(_userId).set({
+          'userName': _userName,
+          'userId': _userId,
+          'userRoom': _userRoom,
+          'selectedMonth': _selectedMonth,
+          'subscribed': true,
+          'timestamp': FieldValue.serverTimestamp(),
+        });
+      } else {
+        // If the user didn't choose on the 6th or 7th day, set subscription to false
+        DateTime now = DateTime.now();
+        if (now.day == 7) {
+          await milkCollection.doc(_userId).set({
+            'userName': _userName,
+            'userId': _userId,
+            'userRoom': _userRoom,
+            'selectedMonth': _selectedMonth,
+            'subscribed': false,
+            'timestamp': FieldValue.serverTimestamp(),
+          });
+        }
+      }
 
       setState(() {
         _subscribed = subscribe;
@@ -78,16 +108,7 @@ class _MilkDetailsPageState extends State<MilkDetailsPage> {
       });
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setInt('lastInteractionTimestamp', DateTime.now().millisecondsSinceEpoch);
-
-      // Enable buttons after 28 days
-      Future.delayed(Duration(days: 28), () {
-        if (mounted) {
-          setState(() {
-            _buttonsEnabled = true;
-          });
-        }
-      });
+      prefs.setBool('userChoiceMade', true);
     } catch (error) {
       print('Error updating subscription: $error');
     }
@@ -134,8 +155,8 @@ class _MilkDetailsPageState extends State<MilkDetailsPage> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 _subscribed
-                    ? 'You have subscribed for milk for $_selectedMonth with User ID: $_userId and Username: $_userName.'
-                    : 'You have not subscribed for milk this month.',
+                    ? 'You have subscribed for milk this current month.'
+                    : 'You have not subscribed for milk this current month.',
                 style: TextStyle(fontSize: 18.0),
                 textAlign: TextAlign.center,
               ),
@@ -188,7 +209,7 @@ class _MilkDetailsPageState extends State<MilkDetailsPage> {
                   height: 50,
                   child: Marquee(
                     text:
-                    'Both buttons will be enabled after 28 days.',
+                    'Both buttons will be enabled from the 6th to the 7th day of the month.',
                     velocity: 30,
                     blankSpace: 20,
                     pauseAfterRound: Duration(seconds: 1),
