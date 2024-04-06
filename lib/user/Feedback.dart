@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hostelbites/components/mybutton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 class FeedbackScreen extends StatefulWidget {
   const FeedbackScreen({Key? key}) : super(key: key);
@@ -19,7 +19,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
-
   Widget _buildHeader() {
     return Container(
       height: 180,
@@ -35,6 +34,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.brown[100],
@@ -140,7 +140,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           final String userName = userSnapshot['Name'] ?? ''; // Provide a default value if the field is missing
           final String userRoomNo = userSnapshot['Room'] ?? ''; // Provide a default value if the field is missing
 
-          // Store feedback in Firestore with a timestamp
+          // Generate timestamp in (hh:mm dd:mm) format
+          String formattedTimestamp = DateFormat('HH:mm dd/MM').format(DateTime.now());
+
+          // Store feedback in Firestore with the formatted timestamp
           await FirebaseFirestore.instance.collection('feedback').add({
             'type': _selectedType,
             'feedback': _textController.text,
@@ -148,7 +151,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
             'user_name': userName,
             'user_room_no': userRoomNo,
             'user_id': userId, // Include the user's ID from the 'users' collection
-            'timestamp': FieldValue.serverTimestamp(),
+            'timestamp': formattedTimestamp,
           });
 
           // Reset form
@@ -194,17 +197,22 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   Future<void> _deleteOldFeedbackEntries() async {
     try {
       final DateTime now = DateTime.now();
-      final DateTime cutoffTime = now.subtract(Duration(hours: 24));
+      final DateTime cutoffTime = now.subtract(Duration(days: 1)); // 1 day ago
 
       QuerySnapshot oldFeedbackSnapshot = await FirebaseFirestore.instance
           .collection('feedback')
-          .where('timestamp', isLessThan: Timestamp.fromDate(cutoffTime))
           .get();
 
       if (oldFeedbackSnapshot.docs.isNotEmpty) {
         // Delete each old feedback entry
         for (DocumentSnapshot feedbackDoc in oldFeedbackSnapshot.docs) {
-          await feedbackDoc.reference.delete();
+          Map<String, dynamic> data = feedbackDoc.data() as Map<String, dynamic>;
+          Timestamp timestamp = data['timestamp'] as Timestamp;
+
+          DateTime postTime = timestamp.toDate();
+          if (postTime.isBefore(cutoffTime)) {
+            await feedbackDoc.reference.delete();
+          }
         }
       }
     } catch (e) {

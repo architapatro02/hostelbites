@@ -13,133 +13,145 @@ class _ShowAttendanceState extends State<ShowAttendance> {
       backgroundColor: Colors.brown[800],
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.brown[900]),
-        title: Text('Attendance Records',
-        style: TextStyle(
-        color: Colors.brown[900],
-        ),
         title: Text(
           'Attendance Records',
           style: TextStyle(
             color: Colors.brown[900],
           ),
+
         ),
         backgroundColor: Colors.brown[300],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('attendance').snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (!snapshot.hasData || snapshot.data == null) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-
-            // Count variables for each category
-            int breakfastPresent = 0, lunchPresent = 0, snacksPresent = 0, dinnerPresent = 0;
-            int breakfastAbsent = 0, lunchAbsent = 0, snacksAbsent = 0, dinnerAbsent = 0;
-
-            // Process each document in the snapshot
-            snapshot.data!.docs.forEach((DocumentSnapshot document) {
-              Map<String, dynamic>? data = document.data() as Map<String, dynamic>?;
-
-              if (data != null) {
-                // Increment counts based on the meal category and attendance status
-                if (data['Breakfast'] == 'present') {
-                  breakfastPresent++;
-                } else {
-                  breakfastAbsent++;
-                }
-
-                if (data['Lunch'] == 'present') {
-                  lunchPresent++;
-                } else {
-                  lunchAbsent++;
-                }
-
-                if (data['Snacks'] == 'present') {
-                  snacksPresent++;
-                } else {
-                  snacksAbsent++;
-                }
-
-                if (data['Dinner'] == 'present') {
-                  dinnerPresent++;
-                } else {
-                  dinnerAbsent++;
-                }
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: StreamBuilder(
+            stream:
+                FirebaseFirestore.instance.collection('attendance').snapshots(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (!snapshot.hasData || snapshot.data == null) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               }
-            });
 
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: 16),
+              // Count variables for each category
+              int breakfastPresent = 0,
+                  lunchPresent = 0,
+                  snacksPresent = 0,
+                  dinnerPresent = 0;
+              int breakfastAbsent = 0,
+                  lunchAbsent = 0,
+                  snacksAbsent = 0,
+                  dinnerAbsent = 0;
 
-                // Meal category blocks
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildClickableMealCategoryBlock('Breakfast', breakfastPresent, breakfastAbsent),
-                    SizedBox(width: 16),
-                    _buildClickableMealCategoryBlock('Lunch', lunchPresent, lunchAbsent),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildClickableMealCategoryBlock('Snacks', snacksPresent, snacksAbsent),
-                    SizedBox(width: 16),
-                    _buildClickableMealCategoryBlock('Dinner', dinnerPresent, dinnerAbsent),
-                  ],
-                ),
-                SizedBox(height: 20),
+              // Process each document in the snapshot
+              snapshot.data!.docs.forEach((DocumentSnapshot document) {
+                Map<String, dynamic>? data =
+                    document.data() as Map<String, dynamic>?;
 
-                // List of attendance records
-                Expanded(
-                  child: ListView(
-                    children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                      Map<String, dynamic>? data = document.data() as Map<String, dynamic>?;
+                if (data != null) {
+                  // Increment counts based on the meal category and attendance status
+                  if (data['Breakfast'] == 'present') {
+                    breakfastPresent++;
+                  } else {
+                    breakfastAbsent++;
+                  }
 
-                      if (data == null) {
-                        return Container(); // Skip null data
-                      }
+                  if (data['Lunch'] == 'present') {
+                    lunchPresent++;
+                  } else {
+                    lunchAbsent++;
+                  }
 
-                      return Card(
-                        elevation: 3,
-                        margin: EdgeInsets.symmetric(vertical: 8),
-                        child: ListTile(
-                          title: Text(
-                            'Name: ${data['Name']}',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Breakfast: ${data['Breakfast']}'),
-                              Text('Lunch: ${data['Lunch']}'),
-                              Text('Snacks: ${data['Snacks']}'),
-                              Text('Dinner: ${data['Dinner']}'),
-                              SizedBox(height: 5),
-                            ],
-                          ),
-                        ),
-                      );
-                    }).toList(),
+                  if (data['Snacks'] == 'present') {
+                    snacksPresent++;
+                  } else {
+                    snacksAbsent++;
+                  }
+
+                  if (data['Dinner'] == 'present') {
+                    dinnerPresent++;
+                  } else {
+                    dinnerAbsent++;
+                  }
+                }
+              });
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: 16),
+
+                  // Meal category blocks
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildClickableMealCategoryBlock(
+                          'Breakfast', breakfastPresent, breakfastAbsent),
+                      SizedBox(width: 16),
+                      _buildClickableMealCategoryBlock(
+                          'Lunch', lunchPresent, lunchAbsent),
+                    ],
                   ),
-                ),
-              ],
-            );
-          },
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildClickableMealCategoryBlock(
+                          'Snacks', snacksPresent, snacksAbsent),
+                      SizedBox(width: 16),
+                      _buildClickableMealCategoryBlock(
+                          'Dinner', dinnerPresent, dinnerAbsent),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+
+                  // List of attendance records
+                  Expanded(
+                    child: ListView(
+                      children:
+                          snapshot.data!.docs.map((DocumentSnapshot document) {
+                        Map<String, dynamic>? data =
+                            document.data() as Map<String, dynamic>?;
+
+                        if (data == null) {
+                          return Container(); // Skip null data
+                        }
+
+                        return Card(
+                          elevation: 3,
+                          margin: EdgeInsets.symmetric(vertical: 8),
+                          child: ListTile(
+                            title: Text(
+                              'Name: ${data['Name']}',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Breakfast: ${data['Breakfast']}'),
+                                Text('Lunch: ${data['Lunch']}'),
+                                Text('Snacks: ${data['Snacks']}'),
+                                Text('Dinner: ${data['Dinner']}'),
+                                SizedBox(height: 5),
+                              ],
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
         ),
-      ),
-    );
+      );
   }
 
   // Helper method to build a rounded square block for a meal category
-  Widget _buildClickableMealCategoryBlock(String category, int present, int absent) {
+  Widget _buildClickableMealCategoryBlock(
+      String category, int present, int absent) {
     return Expanded(
       child: GestureDetector(
         onTap: () {
@@ -166,19 +178,23 @@ class _ShowAttendanceState extends State<ShowAttendance> {
       ),
     );
   }
+
   void _showStudentsList(String category) {
     // Fetch the list of students who submitted data for the selected meal category from Firestore
-    FirebaseFirestore.instance.collection('attendance')
+    FirebaseFirestore.instance
+        .collection('attendance')
         .where(category, isEqualTo: 'present')
         .get()
         .then((QuerySnapshot querySnapshot) {
       // Extract the names and room numbers of students who submitted data for the selected meal category
-      List<String> studentDetails = querySnapshot.docs.map((DocumentSnapshot document) {
+      List<String> studentDetails =
+          querySnapshot.docs.map((DocumentSnapshot document) {
         Map<String, dynamic>? data = document.data() as Map<String, dynamic>?;
 
         if (data != null) {
           String name = data['Name'] as String;
-          String room = data['Room'] as String; // Assuming 'Room' is a String field
+          String room =
+              data['Room'] as String; // Assuming 'Room' is a String field
           return '$name - Room: $room';
         } else {
           return '';
@@ -187,9 +203,12 @@ class _ShowAttendanceState extends State<ShowAttendance> {
 
       // Convert the list of student details to a list of ListTile widgets with custom styling
       List<Widget> studentTiles = studentDetails.map((String details) {
-        List<String> detailsList = details.split(' - Room: '); // Split the details to get name and room separately
+        List<String> detailsList = details.split(
+            ' - Room: '); // Split the details to get name and room separately
         String name = detailsList[0];
-        String room = detailsList.length > 1 ? detailsList[1] : ''; // Ensure room is not null
+        String room = detailsList.length > 1
+            ? detailsList[1]
+            : ''; // Ensure room is not null
 
         return Container(
           margin: EdgeInsets.symmetric(vertical: 4),
@@ -266,5 +285,4 @@ class _ShowAttendanceState extends State<ShowAttendance> {
       );
     });
   }
-
 }

@@ -126,7 +126,7 @@ class _RequestPageState extends State<RequestPage> {
       // Add student data to the users collection
       await FirebaseFirestore.instance.collection('users').doc(requestData['Email']).set({
         'Name': requestData['Name'],
-        'Student_ID': requestData['Student_ID'],
+        'ID': requestData['ID'],
         'Hostel': requestData['Hostel'],
         'Room': requestData['Room'],
         'Email': requestData['Email'],
@@ -163,7 +163,7 @@ class _RequestPageState extends State<RequestPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Name: ${requestData['Name']}', style: GoogleFonts.acme(fontSize: 20, color: Colors.black)),
-                  Text('ID: ${requestData['Student_ID']}', style: GoogleFonts.acme(fontSize: 20, color: Colors.black)),
+                  Text('ID: ${requestData['ID']}', style: GoogleFonts.acme(fontSize: 20, color: Colors.black)),
                   Text('Hostel: ${requestData['Hostel']}', style: GoogleFonts.acme(fontSize: 20, color: Colors.black)),
                   Text('Room: ${requestData['Room']}', style: GoogleFonts.acme(fontSize: 20, color: Colors.black)),
                   Text('Email: ${requestData['Email']}', style: GoogleFonts.acme(fontSize: 20, color: Colors.black)),

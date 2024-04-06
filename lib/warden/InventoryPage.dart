@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hostelbites/warden/AddProduct.dart';
 import 'package:hostelbites/warden/DeleteProduct.dart';
@@ -20,9 +19,6 @@ class InventoryPage extends StatefulWidget {
 
 class _InventoryPageState extends State<InventoryPage> {
 
-  signOut() async {
-    await FirebaseAuth.instance.signOut();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,12 +116,6 @@ class _InventoryPageState extends State<InventoryPage> {
           }
         },
         currentIndex: 1, // Set the current index to 1 for Inventory
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: signOut,
-        tooltip: 'Log OUT',
-        child: const Icon(Icons.exit_to_app_sharp),
-        backgroundColor: Colors.brown,
       ),
     );
   }
