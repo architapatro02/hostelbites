@@ -27,16 +27,25 @@ class _InventoryPageState extends State<InventoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown[100],
+      backgroundColor: Colors.brown[800],
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.brown[900]),
         centerTitle: true,
-        backgroundColor: Colors.brown[500],
+        backgroundColor: Colors.brown[300],
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.inventory),
-            SizedBox(width: 2),
-            Text('Inventory'),
+            Icon(Icons.inventory,
+            color: Colors.brown[900],
+            ),
+            SizedBox(width: 10),
+            Text('Inventory',
+              style: TextStyle(
+                color: Colors.brown[900],
+                fontSize: 23,
+                fontWeight: FontWeight.bold,
+            ),
+            ),
           ],
         ),
       ),
@@ -47,15 +56,19 @@ class _InventoryPageState extends State<InventoryPage> {
             height: 150,
             width: 200,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                image: AssetImage('assets/images/inven.jpeg'), // Replace 'assets/background_image.jpg' with your image asset path
+                fit: BoxFit.cover,
+              ),
               color: Colors.brown[300],
             ),
             child: Center(
-              child: Text(
-                'Update Your Inventory !!',
-                style: GoogleFonts.actor(fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
+              // child: Text(
+              //   'Update Your Inventory !!',
+              //   style: GoogleFonts.actor(fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold),
+              //   textAlign: TextAlign.center,
+              // ),
             ),
           ),
           SizedBox(height: 20),

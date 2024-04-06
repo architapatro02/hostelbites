@@ -13,7 +13,14 @@ class _ViewMilkDetailsState extends State<ViewMilkDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('View Milk Details'),
+        iconTheme: IconThemeData(color: Colors.brown[900]),
+        title: Text('View Milk Details',
+          style: TextStyle(
+            color: Colors.brown[900],
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         backgroundColor: Colors.brown[500], // Use similar color to MilkDetailsPage
       ),
       backgroundColor: Colors.brown[100],

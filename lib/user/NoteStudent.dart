@@ -17,6 +17,20 @@ class _SpecialNoteScreenState extends State<SpecialNoteScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
+  Widget _buildHeader() {
+    return Container(
+      height: 180,
+      decoration: BoxDecoration(
+        color: Colors.brown[900],
+        borderRadius: BorderRadius.circular(15),
+        image: DecorationImage(
+          image: AssetImage(
+              'assets/images/impp.jpg'), // Replace 'assets/background_image.jpg' with your image asset path
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.brown[100],
@@ -35,25 +49,7 @@ class _SpecialNoteScreenState extends State<SpecialNoteScreen> {
       ),
       body: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              height: 150,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.brown[300],
-              ),
-              child: Center(
-                child: Text(
-                  'Special Note For Warden !!',
-                  style: GoogleFonts.actor(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-
-              ),
-            ),
-
-          ),
+          _buildHeader(),
           SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.all(20.0),

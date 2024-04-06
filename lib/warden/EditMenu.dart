@@ -30,6 +30,7 @@ class _EditMenuState extends State<EditMenu> {
     return Scaffold(
       backgroundColor: Colors.brown[800],
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.brown[900]),
         centerTitle: true,
         backgroundColor: Colors.brown[300],
         title: Row(
@@ -37,7 +38,13 @@ class _EditMenuState extends State<EditMenu> {
           children: [
             Icon(Icons.edit),
             SizedBox(width: 2),
-            Text('Edit Menu'),
+            Text('Edit Menu',
+              style: TextStyle(
+                color: Colors.brown[900],
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+            ),
+            ),
           ],
         ),
       ),
@@ -66,7 +73,7 @@ class _EditMenuState extends State<EditMenu> {
       height: 180,
       decoration: BoxDecoration(
         color: Colors.brown[900],
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
           image: AssetImage('assets/images/edit.jpg'), // Replace 'assets/background_image.jpg' with your image asset path
           fit: BoxFit.cover,

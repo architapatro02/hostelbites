@@ -6,8 +6,16 @@ class NotePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.brown[800],
       appBar: AppBar(
-        title: Text('Notifications'),
+        iconTheme: IconThemeData(color: Colors.brown[900]),
+        title: Text('Notifications',
+          style: TextStyle(
+          color: Colors.brown[900],
+          fontSize: 26,
+          fontWeight: FontWeight.bold,
+        ),
+        ),
         centerTitle: true,
         backgroundColor: Colors.brown[300],
       ),

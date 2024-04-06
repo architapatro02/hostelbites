@@ -176,7 +176,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     },
                     child: Text('Add Product'),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.brown[500],
+                      backgroundColor: Colors.brown[500],
                       textStyle: TextStyle(color: Colors.white),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),

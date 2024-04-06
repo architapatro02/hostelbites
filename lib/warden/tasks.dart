@@ -66,7 +66,7 @@ class Tasks extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.brown[900],
+                color: Colors.white,
               ),
             )
           ],

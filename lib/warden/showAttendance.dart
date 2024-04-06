@@ -12,6 +12,11 @@ class _ShowAttendanceState extends State<ShowAttendance> {
     return Scaffold(
       backgroundColor: Colors.brown[800],
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.brown[900]),
+        title: Text('Attendance Records',
+        style: TextStyle(
+        color: Colors.brown[900],
+        ),
         title: Text(
           'Attendance Records',
           style: TextStyle(
