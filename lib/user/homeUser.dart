@@ -37,7 +37,7 @@ class _UserHomeState extends State<UserHome> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/bg9.jpg'), // Replace 'background_image.jpg' with your image path
+            image: AssetImage('assets/images/hbg1.jpg'), // Replace 'background_image.jpg' with your image path
             fit: BoxFit.cover,
           ),
         ),
@@ -50,7 +50,7 @@ class _UserHomeState extends State<UserHome> {
                 height: MediaQuery.of(context).size.height - 230,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.brown[400],
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: StreamBuilder<DocumentSnapshot>(
@@ -86,7 +86,7 @@ class _UserHomeState extends State<UserHome> {
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w900,
-                                  color: Colors.brown[900],
+                                  color: Colors.black,
                                 ),
                               ),
                             ],

@@ -78,7 +78,7 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
               },
               child: Text('Fetch Product Details'),
               style: ElevatedButton.styleFrom(
-                primary: Colors.brown,
+                backgroundColor: Colors.brown,
               ),
             ),
             SizedBox(height: 20),
@@ -105,7 +105,7 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
                           onPressed: _updateProduct,
                           child: Text('Update Product'),
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.brown,
+                              backgroundColor: Colors.brown,
                           ),
                         ),
                       ],

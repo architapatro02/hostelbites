@@ -185,7 +185,7 @@ class _MyRegisterPageWState extends State<MyRegisterPageW> {
               children: [
                 //Welcome to Hostel Bites
                 Text(
-                  'JIJI!!',
+                  'Welcome',
                   style: TextStyle(
                     fontSize: 52,
                   ),

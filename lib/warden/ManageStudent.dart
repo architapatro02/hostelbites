@@ -16,9 +16,10 @@ class _ManageStudentsPageState extends State<ManageStudentsPage> {
     return Scaffold(
       backgroundColor: Colors.brown[800],
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.brown[900]),
         title: Text('Manage Students',
           style: TextStyle(
-            color: Colors.brown[900],
+        color: Colors.brown[900],
             fontSize: 23,
             fontWeight: FontWeight.bold,
           ),

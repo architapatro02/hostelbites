@@ -19,6 +19,7 @@ class _SpecialNoteScreenState extends State<SpecialNoteScreen> {
     return Scaffold(
       backgroundColor: Colors.brown[800],
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.brown[900]),
         centerTitle: true,
         backgroundColor: Colors.brown[300],
         foregroundColor: Colors.white,
@@ -27,7 +28,13 @@ class _SpecialNoteScreenState extends State<SpecialNoteScreen> {
           children: [
             Icon(Icons.account_balance_wallet),
             SizedBox(width: 2),
-            Text('Important Notice'),
+            Text('Important Notice',
+              style: TextStyle(
+                color: Colors.brown[900],
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
       ),

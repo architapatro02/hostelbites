@@ -62,7 +62,7 @@ class _DeleteProductPageState extends State<DeleteProductPage> {
                   },
                   child: Text('Delete Product'),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.brown[500],
+                    backgroundColor: Colors.brown[500],
                     textStyle: TextStyle(color: Colors.white),
                     padding: EdgeInsets.symmetric(vertical: 16, horizontal: 25.0),
                     shape: RoundedRectangleBorder(
@@ -106,7 +106,7 @@ class _DeleteProductPageState extends State<DeleteProductPage> {
                     },
                     child: Text('Delete'),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
+                      backgroundColor: Colors.red,
                       textStyle: TextStyle(color: Colors.white),
                     ),
                   ),

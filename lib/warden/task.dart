@@ -32,53 +32,54 @@ class Task {
   static List<Task> generateTasks() {
     return [
       Task(
-        iconData: Icons.manage_accounts,
-        title: 'Manage Students',
-        bgcolor: Colors.brown[200],
-        iconColor: Colors.brown[900],
-        page: ManageStudentsPage(),
-        backgroundImage: 'assets/images/manage.jpg',
-
-      ),
-      Task(
         iconData: Icons.edit,
         title: 'Edit Menu',
         bgcolor: Colors.brown[200],
-        iconColor: Colors.brown[900],
+        iconColor: Colors.white,
         page: EditMenu(),
-        backgroundImage: 'assets/images/menu.jpeg',
-      ),
-      Task(
-        iconData: Icons.local_drink,
-        title: 'Milk Details',
-        bgcolor: Colors.brown[200],
-        iconColor: Colors.brown[900],
-        page: ViewMilkDetails(),
-        backgroundImage: 'assets/images/milkk.jpg',// Set appropriate widget for Milk Details page
+        backgroundImage: 'assets/images/r5.jpg',
       ),
       Task(
         iconData: Icons.line_style_rounded,
         title: 'View Attendance',
         bgcolor: Colors.brown[200],
-        iconColor: Colors.brown[900],
+        iconColor: Colors.white,
         page: ShowAttendance(),
-        backgroundImage: 'assets/images/attendance.jpg',
+        backgroundImage: 'assets/images/r5.jpg',
       ),
+      Task(
+        iconData: Icons.local_drink,
+        title: 'Milk Details',
+        bgcolor: Colors.brown[200],
+        iconColor: Colors.white,
+        page: ViewMilkDetails(),
+        backgroundImage: 'assets/images/r5.jpg',// Set appropriate widget for Milk Details page
+      ),
+      Task(
+        iconData: Icons.manage_accounts,
+        title: 'Manage Students',
+        bgcolor: Colors.brown[200],
+        iconColor: Colors.white,
+        page: ManageStudentsPage(),
+        backgroundImage: 'assets/images/r5.jpg',
+      ),
+
+
       Task(
         iconData: Icons.note_alt_rounded,
         title: 'Important Notice',
         bgcolor: Colors.brown[200],
-        iconColor: Colors.brown[900],
+        iconColor: Colors.white,
         page: SpecialNoteScreen(),
-        backgroundImage: 'assets/images/notice.jpg',
+        backgroundImage: 'assets/images/r5.jpg',
       ),
       Task(
         iconData: Icons.feedback_rounded,
         title: 'Feedback',
         bgcolor: Colors.brown[200],
-        iconColor: Colors.brown[900],
+        iconColor: Colors.white,
         page: ShowFeedbackPage(),
-        backgroundImage: 'assets/images/feedbackk.jpg',
+        backgroundImage: 'assets/images/r5.jpg',
       ),
     ];
   }

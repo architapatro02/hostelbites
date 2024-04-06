@@ -219,7 +219,7 @@ class _MyRegisterPageState extends State<MyRegisterPage> {
               children: [
                 //Welcome to Hostel Bites
                 Text(
-                  'Annyeong!!',
+                  'Welcome',
                   style: GoogleFonts.montserrat(
                     fontSize: 52,
                   ),

@@ -80,6 +80,7 @@ class _WardenHomeState extends State<WardenHome> {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
+      iconTheme: IconThemeData(color: Colors.brown[900]),
       centerTitle: true,
       backgroundColor: Colors.brown[200],
       elevation: 0,

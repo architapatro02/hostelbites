@@ -18,6 +18,21 @@ class _MarkedAttendancePageState extends State<MarkedAttendancePage> {
     return currentTime.hour >= 21 || currentTime.hour < 6;
   }
 
+  Widget _buildHeader() {
+    return Container(
+      height: 180,
+      decoration: BoxDecoration(
+        color: Colors.brown[900],
+        borderRadius: BorderRadius.circular(15),
+        image: DecorationImage(
+          image: AssetImage(
+              'assets/images/attendance.jpg'), // Replace 'assets/background_image.jpg' with your image asset path
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,23 +55,7 @@ class _MarkedAttendancePageState extends State<MarkedAttendancePage> {
       ),
       body: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              height: 150,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.brown[300],
-              ),
-              child: Center(
-                child: Text(
-                  'MARK ATTENDANCE',
-                  style: GoogleFonts.actor(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          ),
+          _buildHeader(),
           SizedBox(height: 20),
           if (_isTimeToMarkAttendance())
             ToggleButtonForm()

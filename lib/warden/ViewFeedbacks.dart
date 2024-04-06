@@ -12,7 +12,14 @@ class _ShowFeedbackPageState extends State<ShowFeedbackPage> {
     return Scaffold(
       backgroundColor: Colors.brown[800],
       appBar: AppBar(
-        title: Text('Feedback Details'),
+        iconTheme: IconThemeData(color: Colors.brown[900]),
+        title: Text('Feedback Details',
+          style: TextStyle(
+            color: Colors.brown[900],
+            fontSize: 23,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
         backgroundColor: Colors.brown[300],
       ),
