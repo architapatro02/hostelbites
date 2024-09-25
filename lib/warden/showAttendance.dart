@@ -75,71 +75,66 @@ class _ShowAttendanceState extends State<ShowAttendance> {
                     dinnerAbsent++;
                   }
                 }
-              });
+              }
+            });
 
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 16),
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 16),
 
-                  // Meal category blocks
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _buildClickableMealCategoryBlock(
-                          'Breakfast', breakfastPresent, breakfastAbsent),
-                      SizedBox(width: 16),
-                      _buildClickableMealCategoryBlock(
-                          'Lunch', lunchPresent, lunchAbsent),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _buildClickableMealCategoryBlock(
-                          'Snacks', snacksPresent, snacksAbsent),
-                      SizedBox(width: 16),
-                      _buildClickableMealCategoryBlock(
-                          'Dinner', dinnerPresent, dinnerAbsent),
-                    ],
-                  ),
-                  SizedBox(height: 20),
+                // Meal category blocks
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildMealCategoryBlock('Breakfast', breakfastPresent, breakfastAbsent),
+                    SizedBox(width: 16),
+                    _buildMealCategoryBlock('Lunch', lunchPresent, lunchAbsent),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildMealCategoryBlock('Snacks', snacksPresent, snacksAbsent),
+                    SizedBox(width: 16),
+                    _buildMealCategoryBlock('Dinner', dinnerPresent, dinnerAbsent),
+                  ],
+                ),
+                SizedBox(height: 20),
 
-                  // List of attendance records
-                  Expanded(
-                    child: ListView(
-                      children:
-                          snapshot.data!.docs.map((DocumentSnapshot document) {
-                        Map<String, dynamic>? data =
-                            document.data() as Map<String, dynamic>?;
+                // List of attendance records
+                Expanded(
+                  child: ListView(
+                    children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                      Map<String, dynamic>? data = document.data() as Map<String, dynamic>?;
 
-                        if (data == null) {
-                          return Container(); // Skip null data
-                        }
+                      if (data == null) {
+                        return Container(); // Skip null data
+                      }
 
-                        return Card(
-                          elevation: 3,
-                          margin: EdgeInsets.symmetric(vertical: 8),
-                          child: ListTile(
-                            title: Text(
-                              'Name: ${data['Name']}',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Breakfast: ${data['Breakfast']}'),
-                                Text('Lunch: ${data['Lunch']}'),
-                                Text('Snacks: ${data['Snacks']}'),
-                                Text('Dinner: ${data['Dinner']}'),
-                                SizedBox(height: 5),
-                              ],
-                            ),
+                      return Card(
+                        elevation: 3,
+                        margin: EdgeInsets.symmetric(vertical: 8),
+                        child: ListTile(
+                          title: Text(
+                            'Name: ${data['Name'] ?? 'Unknown'}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                        );
-                      }).toList(),
-                    ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Breakfast: ${data['Breakfast'] ?? 'Not recorded'}'),
+                              Text('Lunch: ${data['Lunch'] ?? 'Not recorded'}'),
+                              Text('Snacks: ${data['Snacks'] ?? 'Not recorded'}'),
+                              Text('Dinner: ${data['Dinner'] ?? 'Not recorded'}'),
+                              SizedBox(height: 5),
+                            ],
+                          ),
+                        ),
+                      );
+
+                    }).toList(),
                   ),
                 ],
               );

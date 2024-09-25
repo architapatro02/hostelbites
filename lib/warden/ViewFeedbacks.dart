@@ -45,11 +45,13 @@ class _ShowFeedbackPageState extends State<ShowFeedbackPage> {
               List<DataRow> rows = [];
 
               snapshot.data!.docs.forEach((doc) {
-                String type = doc['type'];
-                String feedback = doc['feedback'];
-                String userName = doc['user_name'];
-                String room = doc['user_room_no'];
-                String timestamp = doc['timestamp']; // Timestamp field is of type String
+
+                String type = doc['type'] ?? 'Unknown';
+                String feedback = doc['feedback'] ?? 'No feedback provided';
+                String userName = doc['user_name'] ?? 'Anonymous';
+                String room = doc['user_room_no'] ?? 'N/A';
+
+
 
                 rows.add(buildDataRow(type, feedback, userName, room, timestamp));
               });
