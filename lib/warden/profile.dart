@@ -21,10 +21,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final currentUser = FirebaseAuth.instance.currentUser!;
   final usersCollection = FirebaseFirestore.instance.collection("warden");
 
-  signout() async {
-    FirebaseAuth.instance.signOut().then((value) {});
-  }
-
   Future<void> editField(String field) async {
     String newValue = "";
     await showDialog(
@@ -202,12 +198,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
         },
         currentIndex: _currentIndex,
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: signout,
-        tooltip: 'Log OUT',
-        child: const Icon(Icons.exit_to_app_sharp),
-        backgroundColor: Colors.brown,
       ),
     );
   }
