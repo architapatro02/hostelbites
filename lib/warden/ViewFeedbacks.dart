@@ -13,7 +13,8 @@ class _ShowFeedbackPageState extends State<ShowFeedbackPage> {
       backgroundColor: Colors.brown[800],
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.brown[900]),
-        title: Text('Feedback Details',
+        title: Text(
+          'Feedback Details',
           style: TextStyle(
             color: Colors.brown[900],
             fontSize: 23,
@@ -44,10 +45,10 @@ class _ShowFeedbackPageState extends State<ShowFeedbackPage> {
               List<Widget> rows = [];
 
               snapshot.data!.docs.forEach((doc) {
-                String type = doc['type'];
-                String feedback = doc['feedback'];
-                String userName = doc['user_name'];
-                String room = doc['user_room_no'];
+                String type = doc['type'] ?? 'Unknown';
+                String feedback = doc['feedback'] ?? 'No feedback provided';
+                String userName = doc['user_name'] ?? 'Anonymous';
+                String room = doc['user_room_no'] ?? 'N/A';
 
                 rows.add(buildDataRow(type, feedback, userName, room));
               });

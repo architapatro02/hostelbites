@@ -77,7 +77,7 @@ class _MyLoginState extends State<MyLogin> {
                   size: 100,
                 ),
                 //Welcome to Hostel Bites
-                Text('Hostel Bites!!', style: GoogleFonts.montserrat(fontSize: 52)),
+                Text('Hostel Bites!', style: GoogleFonts.montserrat(fontSize: 40)),
                 SizedBox(
                   height: 10,
                 ),

@@ -107,21 +107,22 @@ class _ShowAttendanceState extends State<ShowAttendance> {
                         margin: EdgeInsets.symmetric(vertical: 8),
                         child: ListTile(
                           title: Text(
-                            'Name: ${data['Name']}',
+                            'Name: ${data['Name'] ?? 'Unknown'}',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Breakfast: ${data['Breakfast']}'),
-                              Text('Lunch: ${data['Lunch']}'),
-                              Text('Snacks: ${data['Snacks']}'),
-                              Text('Dinner: ${data['Dinner']}'),
+                              Text('Breakfast: ${data['Breakfast'] ?? 'Not recorded'}'),
+                              Text('Lunch: ${data['Lunch'] ?? 'Not recorded'}'),
+                              Text('Snacks: ${data['Snacks'] ?? 'Not recorded'}'),
+                              Text('Dinner: ${data['Dinner'] ?? 'Not recorded'}'),
                               SizedBox(height: 5),
                             ],
                           ),
                         ),
                       );
+
                     }).toList(),
                   ),
                 ),
